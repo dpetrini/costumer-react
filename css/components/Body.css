@@ -1,0 +1,10 @@
+.resultadoGeracao {
+    font-weight: bold;
+    font-size: 1.4em;
+    color: red;
+}
+
+.main-screen {
+    padding-left: 10px;
+    padding-right: 10px;
+}
