@@ -12,6 +12,7 @@ const NavBarTop = () => {
       </Navbar.Header>
       <Nav pullRight={true} >
         <LinkContainer exact to="/"><NavItem href="#">Home</NavItem></LinkContainer>
+        <LinkContainer to="/login"><NavItem href="#">Login</NavItem></LinkContainer> 
         <LinkContainer to="/help"><NavItem href="#">Ajuda</NavItem></LinkContainer>
         <LinkContainer to="/myquotes"><NavItem href="#">Minhas Cotações</NavItem></LinkContainer>
         <LinkContainer to="/userconfig"><NavItem href="#">Usuário</NavItem></LinkContainer>

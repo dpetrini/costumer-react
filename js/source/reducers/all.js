@@ -92,6 +92,7 @@ const initialState = {
   selectedResult: 0,
   selectedCity: 'São Paulo',
   proposalSent: false,
+  authorized: true,
 };
 
 export default function System(state=initialState, action) {	
@@ -339,6 +340,28 @@ export default function System(state=initialState, action) {
       };
     }
 
+    //Login
+    case SystemActionTypes.LOGIN_SUCCESS: {
+      
+      console.log('SUCESS LOGIN', action.result);
+      
+      return {
+        ...state,
+        authorized: true,
+      };
+    }
+    case SystemActionTypes.LOGIN_NOTFOUND: {
+      
+      console.log('LOGIN NOT FOUND', action.result);
+      
+      return {
+        ...state,
+        authorized: false,
+      };
+    }    
+
+
+    
     default:
       return state;
   }
