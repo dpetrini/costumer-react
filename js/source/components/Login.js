@@ -2,9 +2,15 @@ import React, { Component } from 'react';
 import { Row, Col, Tab, Nav, NavItem, Button, Form, FormGroup, ControlLabel, FormControl } from 'react-bootstrap';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
+import { withRouter } from 'react-router-dom';
 
 import * as SystemActionCreators from '../actions/all';
 import * as config from '../config';
+
+import PricingContainer from './PricingContainer'
+import Portfolio from './Portfolio'
+
+import '../../../css/components/Login.css';
 
 // baseado no CostumerForm.js => refatorar DRY no futuro
 
@@ -37,17 +43,32 @@ class Login extends Component {
     };
 
   }
+  componentWillReceiveProps(newProps) {
+   
+    console.log(this.props)
+    console.log('[Login] Will Receive Props', this.props.authorized)
 
+    if (this.props.authorized)
+      this.props.history.push('/');
+    // BrowserHistory.push('/');
+    
+  }
+
+  // If user logged in jump out
+  componentWillMount() {
+    if (this.props.authorized)
+      this.props.history.push('/');
+  }
+      
+  componentDidUpdate() {
+    if (this.props.authorized)
+      this.props.history.push('/');
+  }
+      
   _onSubmit(e) {
 
     const { dispatch } = this.props;
-    
-    //  loginPostData: (url) => dispatch(SystemActionCreators.loginPostData(url));
-
-
-    const loginPostData = bindActionCreators((url, data) =>SystemActionCreators.loginPostData(url, data), dispatch);
-
-
+    const loginPostData = bindActionCreators((url, data) => SystemActionCreators.loginPostData(url, data), dispatch);
     e.preventDefault();
 
     // Check if fields are validated
@@ -58,16 +79,7 @@ class Login extends Component {
       return;
     }
 
-    // From here on will submit
-
-    // const deviceData	= {
-    //   firstName: this.state.firstName,
-    //   lastName: this.state.lastName,
-    //   contactNumber: this.state.contactNumber,
-    //   emailAddress: this.state.emailAddress,
-    // };
-
-//BRYPT PASSWORD...
+    //BRYPT PASSWORD...no... use SSL
 
     const deviceData = {
       email: this.state.emailAddress,
@@ -80,11 +92,9 @@ class Login extends Component {
 
     // Will insert message of deletion/edition address: 
     this.setState({
-      messageValidation: 'Success! Please close to return',
+      messageValidation: 'Success! Please wait...',
     });
 
-    // this.fireOnresultDataChange(deviceData);
-    
   }
 
   // Send information about new point to parent
@@ -133,57 +143,95 @@ class Login extends Component {
     });
   }
 
-
-
   render () { 
     return (
       <div className={'main-screen'}>
-        <Tab.Container 
-          defaultActiveKey={'first'} 
-          id="left-tabs-example" >
-          <Row className="clearfix">
-            <Col sm={2}>
-              <Nav bsStyle="pills" stacked={true}>
-                <NavItem eventKey="first">
-            Login             
-                </NavItem> 
-              </Nav>    
-            </Col>
 
-            <Col sm={8}>
-              <Tab.Content animation={true}>
-                <Tab.Pane eventKey="first">
+        <div className={'jumbotron text-center'}>
+          
+          <h1>Proposta FV</h1> 
+          <br />
+          <p>Use nossa aplicação para enviar propostas para todos seus clientes sem demoras.</p> 
+          <br />
+          <br />
+          <br />
 
-                  <Form horizontal={true} onSubmit={this._onSubmit.bind(this)} action="">
+          <Row >
 
-                    <FormRow name={'Email'} text={'your email here'} required={true}
-                      onChange={this._emailValidate.bind(this)}
-                      validation={this.state.emailValid} />
+            <Col sm={4} />
 
-                    <FormRow name={'Password'} text={'your password'} required={true}
-                      onChange={this._inputChange.bind(this, 'password')}
-                    />
+            <Col sm={4}>
 
-                    <FormGroup>
-                      <Col componentClass={ControlLabel} sm={9} smOffset={1}>
-                        <p className="text-left" style={{color: 'red'}}> {this.state.messageValidation}</p>
-                      </Col>
-                      <Col sm={2}>
-                        <Button type="submit">
-                          Submit
-                        </Button>
-                      </Col>
-                    </FormGroup>
+              <Form horizontal={true} onSubmit={this._onSubmit.bind(this)} action="">
 
-                  </Form>
+                <FormRow name={'Email'} text={'your email here'} required={true}
+                  onChange={this._emailValidate.bind(this)}
+                  validation={this.state.emailValid} />
 
-                
-                </Tab.Pane>
-              </Tab.Content>
+                <FormRow name={'Password'} text={'your password'} required={true}
+                  onChange={this._inputChange.bind(this, 'password')}
+                />
+
+                <FormGroup>
+                  <Col componentClass={ControlLabel} sm={8} smOffset={1}>
+                    <p className="text-left" style={{color: 'red'}}> {this.state.messageValidation}</p>
+                  </Col>
+
+                  <Col sm={2}>
+                    <Button type="submit" className={'btn btn-default btn-lg'}>
+                          Login
+                    </Button>
+                  </Col>
+
+                </FormGroup>
+
+              </Form>
 
             </Col>
           </Row>
-        </Tab.Container>
+
+        </div>
+
+        <div className={'container-fluid'}>
+          <Row>
+            <Col sm={8}>
+              <h2>Resultados gráficos </h2>
+              <h4>Que indicam a economia gerada</h4> 
+              <p>Consumo com a energia solar e retorno do investimento</p>
+              <button className={'btn btn-default btn-lg'}>Get in Touch</button>
+            </Col>
+            <Col sm={4}>
+              <span className={'glyphicon glyphicon-signal logo'} />
+            </Col>
+          </Row>
+        </div>
+
+        <div className={'container-fluid bg-grey'}>
+          <Row>
+            <Col sm={4}>
+              <span className={'glyphicon glyphicon-globe logo'} /> 
+            </Col>
+            <Col sm={8}>
+              <h2>Valorize a consciência ecológica</h2>
+              <h4><strong>Você vai atingir:</strong> Rápido tempo de resposta</h4> 
+              <p><strong>Reconhecimento:</strong> Seu cliente vai perceber a diferença no atendimento!</p>
+            </Col>
+          </Row>
+        </div>
+
+        <PricingContainer />
+
+        
+        <Row>
+          <Col sm={12}>
+
+            <img src={'/images/main.jpg'} className={'img-responsive'}/>
+
+          </Col>
+        </Row>
+
+        <Portfolio />
+        
       </div>
     );
   }
@@ -195,7 +243,7 @@ class Login extends Component {
 // transform state to props (state change are injected in props in below statements)
 const mapStateToProps = state => (
   { 
-    authed: state.authorized,
+    authorized: state.authorized,
   }
 );
 
@@ -207,5 +255,5 @@ const mapStateToProps = state => (
 // };
 
 // Subscribes any changes in state to the container Scoreboard 
-// export default withRouter(connect(mapStateToProps)(Body))
-export default connect(mapStateToProps/*, mapDispatchToProps*/)(Login)
+// export default connect(mapStateToProps/*, mapDispatchToProps*/)(Login)
+export default withRouter(connect(mapStateToProps)(Login));

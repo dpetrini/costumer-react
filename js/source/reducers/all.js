@@ -92,7 +92,7 @@ const initialState = {
   selectedResult: 0,
   selectedCity: 'São Paulo',
   proposalSent: false,
-  authorized: true,
+  authorized: false,
 };
 
 export default function System(state=initialState, action) {	
@@ -360,7 +360,25 @@ export default function System(state=initialState, action) {
       };
     }    
 
-
+    //Logout
+    case SystemActionTypes.LOGOUT_SUCCESS: {
+      
+      console.log('SUCESS LOGOUT', action.result);
+      
+      return {
+        ...state,
+        authorized: false,
+      };
+    }
+    case SystemActionTypes.LOGOUT_ERROR: {
+      
+      console.log('LOGOUT ERROR', action.result);
+      
+      return {
+        ...state,
+        authorized: false,
+      };
+    }   
     
     default:
       return state;

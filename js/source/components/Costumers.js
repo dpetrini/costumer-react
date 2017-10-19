@@ -99,7 +99,7 @@ class Costumers extends Component {
   render() {
 
     return (
-      <div>
+      <div className={'main-screen-body'} >
         <Excel 
           initialData={this.props.costumerData} 
           headers={this.props.costumerHeader} 

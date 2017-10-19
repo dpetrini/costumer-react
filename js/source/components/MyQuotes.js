@@ -23,7 +23,7 @@ const MyQuotes = props => {
   // const updateQuotes = bindActionCreators(SystemActionCreators.updateQuotes, dispatch);
 
   return (
-    <div className={'main-screen'}>
+    <div className={'main-screen-body'} >
       <Tab.Container 
         defaultActiveKey={'first'} 
         id="left-tabs-example" >
@@ -34,6 +34,7 @@ const MyQuotes = props => {
             Minhas Cotações             
               </NavItem> 
             </Nav>    
+            <span className={'glyphicon glyphicon-gbp logo-side'} /> 
           </Col>
 
           <Col sm={8}>

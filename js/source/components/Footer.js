@@ -6,7 +6,7 @@ const Footer = () => {
     <Grid>
       <hr />
       <footer>
-        <p>© Company 2014</p>
+        <p>© ISI - Sistemas Inteligentes para otimizar e fazer crescer seus negócios.</p>
       </footer>
     </Grid>
   );

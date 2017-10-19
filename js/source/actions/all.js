@@ -221,7 +221,41 @@ export function loginPostData(url, data) {
   };
 }
 
+//Logout
+export const logoutSuccess = result => {
+  return {
+    type: SystemActionTypes.LOGOUT_SUCCESS,
+    result,
+  };
+};
+
+export const logoutError = result => {
+  return {
+    type: SystemActionTypes.LOGOUT_ERROR,
+    result,
+  };
+};
+
+export function logoutPostData(url) {
+  return (dispatch) => {
+    dispatch(itemsIsLoading(true));
+
+    fetch(url)
+      .then((response) => {
+        if (!response.ok) {
+          throw Error(response.statusText);
+        }
+        dispatch(itemsIsLoading(false));
+        return response;
+      })
+      .then((response) => response.json())
+      .then((items) => dispatch(logoutSuccess(items)))
+      .catch(() => dispatch(logoutError(true)));
+  };
+}
+
 //Sign UP
+
 
 // export const SIGNUP_SUCCESS = 'signup/SIGNUP_SUCCESS'
 // export const SIGNUP_FAILURE = 'login/SIGNUP_FAILURE'

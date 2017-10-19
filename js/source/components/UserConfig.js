@@ -42,7 +42,7 @@ class UserConfig extends Component {
 
   render() {
     return (
-      <div className={'main-screen'}>
+      <div className={'main-screen-body'} >
         <Tab.Container 
           defaultActiveKey={'first'} 
           id="left-tabs-example" >
@@ -56,7 +56,8 @@ class UserConfig extends Component {
                 <NavItem eventKey="second">
             Configurações Sistema              
                 </NavItem> 
-              </Nav>    
+              </Nav>   
+              <span className={'glyphicon glyphicon-wrench logo-side'} />  
             </Col>
 
             <Col sm={8}>

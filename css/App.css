@@ -1,5 +1,5 @@
 body {
-  margin: 200;
+  margin: 10;
 }
  #container {
   -webkit-box-sizing: border-box;
@@ -14,3 +14,40 @@ body {
 /* * {
     font-family: 'Roboto', sans-serif;
 } */
+
+h2 {
+    font-size: 24px;
+    text-transform: uppercase;
+    color: #303030;
+    font-weight: 600;
+    margin-bottom: 30px;
+}
+
+h4 {
+    font-size: 19px;
+    line-height: 1.375em;
+    color: #303030;
+    font-weight: 400;
+    margin-bottom: 30px;
+}
+
+body {
+    font: 400 15px Lato, sans-serif;
+    line-height: 1.8;
+    color: #818181;
+}
+
+.jumbotron {
+    font-family: Montserrat, sans-serif;
+}
+
+.navbar {
+    font-family: Montserrat, sans-serif;
+}
+
+/* side bar logos */
+.logo-side {
+    font-size: 160px;
+    color: #337ab7;
+    padding: 15px
+}

@@ -26,5 +26,8 @@ export const ITEMS_POST_DATA_SUCCESS = 'fetch/ITEMS_POST_DATA_SUCCESS'
 export const LOGIN_SUCCESS = 'login/LOGIN_SUCCESS'
 export const LOGIN_NOTFOUND = 'login/LOGIN_NOTFOUND'
 
+export const LOGOUT_SUCCESS = 'login/LOGOUT_SUCCESS'
+export const LOGOUT_ERROR = 'login/LOGOUT_ERROR'
+
 export const SIGNUP_SUCCESS = 'signup/SIGNUP_SUCCESS'
 export const SIGNUP_FAILURE = 'login/SIGNUP_FAILURE'

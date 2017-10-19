@@ -79,7 +79,7 @@ class ConfigPanel extends Component {
   _renderConfigPanel() {
     var configData = this.props.configData;
     return (
-      <div>
+      <div className={'main-screen-body'} >
         <Row className="clearfix">
           <Col sm={4}>
 

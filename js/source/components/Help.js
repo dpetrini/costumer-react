@@ -3,7 +3,7 @@ import { Row, Col, Tab, Nav, NavItem } from 'react-bootstrap';
 
 const Help = () => {
   return (
-    <div className={'main-screen'}>
+    <div className={'main-screen-body'} >
       <Tab.Container 
         defaultActiveKey={'first'} 
         id="left-tabs-example" >
@@ -13,10 +13,12 @@ const Help = () => {
               <NavItem eventKey="first">
             Ajuda              
               </NavItem> 
-            </Nav>    
+            </Nav>   
+            <span className={'glyphicon glyphicon-education logo-side'} /> 
           </Col>
 
           <Col sm={8}>
+            
             <Tab.Content animation={true}>
               <Tab.Pane eventKey="first">
                 <ol>
@@ -31,6 +33,7 @@ const Help = () => {
             </Tab.Content>
 
           </Col>
+
         </Row>
       </Tab.Container>
     </div>

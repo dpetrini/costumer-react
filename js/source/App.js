@@ -16,6 +16,7 @@ import MyQuotes from './components/MyQuotes';
 import UserConfig from './components/UserConfig';
 
 import Login from './components/Login';
+import Logout from './components/Logout';
 
 import '../../css/App.css'; 
 
@@ -28,12 +29,15 @@ class App extends Component {
         <div> 
           <NavBarTop />
           <Switch>
-            <Route exact path="/" component={Body} />
+            {/* <Route exact path="/" component={Body} /> */}
             <Route path="/about" component={About} />
-             <Route path="/help" component={Help} /> 
+            <Route path="/help" component={Help} /> 
             <Route path="/myquotes" component={MyQuotes} />
             <Route path="/userconfig" component={UserConfig} />
-            <PrivateRoute authed={this.props.authed} path="/login" component={Login} />
+            <Route path="/login" component={Login} />
+            <Route path="/logout" component={Logout} />
+            {/* <PrivateRoute authed={this.props.authed} path="/login" component={Login} /> */}
+            <PrivateRoute authed={this.props.authorized} exact path="/" component={Body} />
           </Switch>
           <Footer />
         </div>
@@ -50,15 +54,17 @@ function PrivateRoute ({component: Component, authed, ...rest}) {
       {...rest}
       render={(props) => authed === true
         ? <Component {...props} />
-        : <Redirect to={{pathname: '/about', state: {from: props.location}}} />}
+
+        : <Redirect to={{pathname: '/login', state: {from: props.location}}} />}
     />
   )
 }
+//        {/* : <Redirect to={{pathname: '/about', state: {from: props.location}}} />} */}
 
 // transform state to props (state change are injected in props in below statements)
 const mapStateToProps = state => (
   { 
-    authed: state.authorized,
+    authorized: state.authorized,
   }
 );
 

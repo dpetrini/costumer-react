@@ -137,7 +137,7 @@ class ResultPanel extends Component {
 
   _renderResultPanel() {
     return (
-      <div>
+      <div className={'main-screen-body'} >
 
         <div className="panel panel-primary">
 

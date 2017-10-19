@@ -3,7 +3,7 @@ import { Row, Col, Tab, Nav, NavItem } from 'react-bootstrap';
 
 const About = () => {
   return (
-    <div className={'main-screen'}>
+    <div className={'main-screen-body'} >
       <Tab.Container 
         defaultActiveKey={'first'} 
         id="left-tabs-example" >
@@ -14,6 +14,7 @@ const About = () => {
             About              
               </NavItem> 
             </Nav>    
+            <span className={'glyphicon glyphicon-certificate logo-side'} />  
           </Col>
 
           <Col sm={8}>

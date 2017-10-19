@@ -79,7 +79,7 @@ class Body extends Component {
 
     return (
 
-      <div className={'main-screen'}>
+      <div className={'main-screen-body'} >
 
         <Tab.Container 
           activeKey={/*fullData.*/this.key}
@@ -109,6 +109,7 @@ class Body extends Component {
             Enviar Proposta
                 </NavItem>
               </Nav>
+              <span className={'glyphicon glyphicon-leaf logo-side'} /> 
             </Col>
             <Col sm={8}>
               <Tab.Content animation={true}>
@@ -188,11 +189,11 @@ const mapStateToProps = state => (
 );
 
 // Thunk
-const mapDispatchToProps = (dispatch) => {
-  return {
-    fetchData: (url) => dispatch(SystemActionCreators.costumerFetchData(url)),
-  };
-};
+// const mapDispatchToProps = (dispatch) => {
+//   return {
+//     fetchData: (url) => dispatch(SystemActionCreators.costumerFetchData(url)),
+//   };
+// };
 
 // Subscribes any changes in state to the container Scoreboard 
 // export default withRouter(connect(mapStateToProps)(Body))

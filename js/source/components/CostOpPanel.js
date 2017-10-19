@@ -62,7 +62,7 @@ class CostOpPanel extends Component {
   _renderCostOpPanel() {
     var configData = this.props.configData; 
     return (
-      <div>
+      <div className={'main-screen-body'} >
         <Row className="clearfix">
           <Col sm={4}>
             <form>
