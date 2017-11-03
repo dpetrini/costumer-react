@@ -55,14 +55,12 @@ export const updateSelectedResult = (row) => {
   };
 };
 
-
 // export const selectCostumer = costumerData => {
 //   return {
 //     type: SystemActionTypes.SELECT_COSTUMER,
 //     costumerData,
 //   };
 // };
-
 
 export const addCostumer = costumerData => {
   return {
@@ -163,7 +161,6 @@ export function costumerPostData(url, data) {
       .catch(() => dispatch(itemsHasErrored(true)));
   };
 }
-
 
 export const itemsPostDataSuccess = result => {
   return {

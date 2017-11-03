@@ -56,6 +56,9 @@ class Login extends Component {
 
   // If user logged in jump out
   componentWillMount() {
+
+    console.log('teste', this.props.testProp)
+
     if (this.props.authorized)
       this.props.history.push('/');
   }

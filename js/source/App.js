@@ -29,14 +29,13 @@ class App extends Component {
         <div> 
           <NavBarTop />
           <Switch>
-            {/* <Route exact path="/" component={Body} /> */}
             <Route path="/about" component={About} />
             <Route path="/help" component={Help} /> 
             <Route path="/myquotes" component={MyQuotes} />
             <Route path="/userconfig" component={UserConfig} />
-            <Route path="/login" component={Login} />
+            {/* <Route path="/login" component={Login} /> */}
+            <Route path="/login" render={() => <Login testProp={true}/>} />
             <Route path="/logout" component={Logout} />
-            {/* <PrivateRoute authed={this.props.authed} path="/login" component={Login} /> */}
             <PrivateRoute authed={this.props.authorized} exact path="/" component={Body} />
           </Switch>
           <Footer />
