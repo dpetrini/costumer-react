@@ -1,7 +1,9 @@
 # Costumer React
 SPA app to support creation of commercial proposals for end costumers.
 (Front-end)
-This system is intended now for local environment of Electrical Energy companies, costs and taxes and will be available to other countries in the future.
+This system is intended now for local environment of Electrical Energy companies, costs and taxes and will be available to other countries in the future. Currently mostly supported in Portuguse.
+
+<img src="images/thumb-interface.jpg" width="600">
 
 * [Technical Stack](#technical-stack)
 * [Architecture](#architecture)
@@ -10,8 +12,6 @@ This system is intended now for local environment of Electrical Energy companies
 * [Tests](#tests)
 * [How to Run](#how-to-run)
 * [Missing Features](#missing-features)
-
-<img src="images/thumb-interface.jpg" width="600">
 
 ## Technical Stack
 * Language - JavaScript/ES6/ES7/Babel. React components are written on ES6/ES7 using Babel transpiler.
@@ -45,12 +45,12 @@ The main features are:
 * Proposal text creation to be submitted to costumer by email
 * All sorts of configuration and initial conditions
 * UX FLOW:
-* *  User login in
-* *  user input the consumption of electrical energy bill monthly values, kWh month cost by electrical company
-* *  User enters installation costs
-* *  In Results tab user inserts the cost of system based in power calculation for costumer
-* *  User inserts the costumer information for proposal sending and database storaging
-* *  User generates the proposal in HTML with graphics to send to costumer
+  *  User login in
+  *  user input the consumption of electrical energy bill monthly values, kWh month cost by electrical company
+  *  User enters installation costs
+  *  In Results tab user inserts the cost of system based in power calculation for costumer
+  *  User inserts the costumer information for proposal sending and database storaging
+  *  User generates the proposal in HTML with graphics to send to costumer
 
 
 ## Environment Variables
