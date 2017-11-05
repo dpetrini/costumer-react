@@ -247,8 +247,7 @@ export default function System(state=initialState, action) {
                       ((avgConsumption - 50) - // avg consumption -tx disp
                       state.resultData[0].generation)) + // Generation part
                       parseInt(state.configData.custoIlumPub); // plus public lighs
-        console.log(state.configData.custokWh + ' *(50 + ((' + avgConsumption + '- 50) -' + state.resultData[0].generation + ')) + '+ parseInt(state.configData.custoIlumPub))
-
+        
       } else if (state.configData.taxaDisp == 'Tri') {
 
         // temp = media consumo kwh / HSP * Rendimento AP * dias
@@ -308,7 +307,8 @@ export default function System(state=initialState, action) {
                         parseInt(configData.custoEng) +
                         parseInt(configData.custoMisc);
 
-        resultData[i].payback= (resultData[i].totalCost / (resultData[i].generation * configData.custokWh) ) / 12;
+        resultData[i].payback= (resultData[i].totalCost / 
+                               (resultData[i].generation * configData.custokWh) ) / 12;
 
       }            
 
@@ -321,7 +321,7 @@ export default function System(state=initialState, action) {
     }
 
 
-
+    // *********** Other configuration updates: HSP (sun daily hours per location)
     // Update city name in selection list for HSP
     case SystemActionTypes.UPDATE_CITY_HSP: {
 
@@ -342,7 +342,7 @@ export default function System(state=initialState, action) {
       };
     }
 
-    // User clicks on Send Proposal button.
+    // ***********  User clicks on Send Proposal button.
     // TODO: save to database
     case SystemActionTypes.PROPOSAL_SENT: {
       
@@ -364,15 +364,15 @@ export default function System(state=initialState, action) {
       };
     }
 
-    // THUNK MW related actions
+    // Other THUNK MW related actions
 
-    // Result from Fetch costumers from database to Costumers component
-    //  update from db to state.
+    // ***********  Result from Fetch costumers from database to Costumers component
+    // Update from db to state.
     case SystemActionTypes.ITEMS_FETCH_DATA_SUCCESS: {
 
-      console.log('SUCESS FETCH', action.items);
+      console.log('SUCCESS FETCH', action.items);
 
-      const costumerData = []; //state.costumerData.slice();
+      const costumerData = [];
 
       action.items.forEach(function(element) {
         const tempData = [
@@ -403,8 +403,7 @@ export default function System(state=initialState, action) {
       };
     }
 
-  
-    
+    // Default state: no changes
     default:
       return state;
   }
