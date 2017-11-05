@@ -1,5 +1,6 @@
 import * as SystemActionTypes from '../actiontypes/all';
 
+// Update user changed values in UI - asl calculations - Actions
 export const updateData = data => {
   return {
     type: SystemActionTypes.UPDATE_DATA,
@@ -7,13 +8,14 @@ export const updateData = data => {
   };
 };
 
-// export const updateSystem = systemData => {
-//   return {
-//     type: SystemActionTypes.UPDATE_SYSTEM_DATA,
-//     systemData,
-//   };
-// };
+export const updateResult = (resultData) => {
+  return {
+    type: SystemActionTypes.UPDATE_RESULT_DATA,
+    resultData, 
+  };
+};
 
+// Update HSP value in UI (select)
 export const updateCityHsp = (city) => {
   return {
     type: SystemActionTypes.UPDATE_CITY_HSP,
@@ -21,24 +23,11 @@ export const updateCityHsp = (city) => {
   };
 };
 
-// export const updateConfig = configData => {
-//   return {
-//     type: SystemActionTypes.UPDATE_CONFIG_DATA,
-//     configData,
-//   };
-// };
-
-// export const updataOpCost = configData => {
-//   return {
-//     type: SystemActionTypes.CONFIG_OPCOST,
-//     configData,
-//   };
-// };
-
-export const updateResult = (resultData) => {
+// Update selected result (radio button and BAR gaph in UI) Actions
+export const updateSelectedResult = (row) => {
   return {
-    type: SystemActionTypes.UPDATE_RESULT_DATA,
-    resultData, 
+    type: SystemActionTypes.UPDATE_SELECTED_RESULT,
+    row, 
   };
 };
 
@@ -48,20 +37,7 @@ export const updateBarGraph = () => {
   };
 };
 
-export const updateSelectedResult = (row) => {
-  return {
-    type: SystemActionTypes.UPDATE_SELECTED_RESULT,
-    row, 
-  };
-};
-
-// export const selectCostumer = costumerData => {
-//   return {
-//     type: SystemActionTypes.SELECT_COSTUMER,
-//     costumerData,
-//   };
-// };
-
+// Add new costumer Action
 export const addCostumer = costumerData => {
   return {
     type: SystemActionTypes.ADD_COSTUMER,
@@ -69,6 +45,7 @@ export const addCostumer = costumerData => {
   };
 };
 
+// Response Action to proposal button clicked
 export const proposalSent = (name, lastName, sysProposal, timeNow, totalCost, status) => {
   return {
     type: SystemActionTypes.PROPOSAL_SENT,
@@ -83,6 +60,7 @@ export const proposalSent = (name, lastName, sysProposal, timeNow, totalCost, st
 
 // e vamos lá para o MW thunk e essa complexidade para fetch...
 // thunk action creators
+// Reads Costumer data from server
 export function costumerFetchData(url) {
   return (dispatch) => {
     dispatch(itemsIsLoading(true));
@@ -122,9 +100,7 @@ export const itemsFetchDataSuccess = items => {
   };
 };
 
-
 // Send Costumer data to server
-
 export function costumerPostData(url, data) {
   return (dispatch) => {
     dispatch(itemsIsLoading(true));
@@ -153,7 +129,6 @@ export function costumerPostData(url, data) {
           dispatch(itemsHasErrored(true));
         }
 
-        // console.log(response)
         return;// response;
       })
       // .then((response) => response.json())
@@ -169,7 +144,7 @@ export const itemsPostDataSuccess = result => {
   };
 };
 
-// Login
+// Login Actions
 export const loginSuccess = result => {
   return {
     type: SystemActionTypes.LOGIN_SUCCESS,
@@ -209,7 +184,6 @@ export function loginPostData(url, data) {
           dispatch(loginNoFound(true));
         }
 
-        // console.log(response)
         return;// response;
       })
       // .then((response) => response.json())
@@ -218,7 +192,7 @@ export function loginPostData(url, data) {
   };
 }
 
-//Logout
+//Logout Actions
 export const logoutSuccess = result => {
   return {
     type: SystemActionTypes.LOGOUT_SUCCESS,
@@ -251,8 +225,4 @@ export function logoutPostData(url) {
   };
 }
 
-//Sign UP
-
-
-// export const SIGNUP_SUCCESS = 'signup/SIGNUP_SUCCESS'
-// export const SIGNUP_FAILURE = 'login/SIGNUP_FAILURE'
+//Sign UP Actions: TODO
