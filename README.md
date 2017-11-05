@@ -2,6 +2,7 @@
 SPA app to support creation of commercial proposals for end costumers.
 (Front-end)
 This system is intended now for local environment of Electrical Energy companies, costs and taxes and will be available to other countries in the future. Currently mostly supported in Portuguse.
+The server repository is dpetrini/costumer.
 
 <img src="images/thumb-interface.jpg" width="600">
 
@@ -70,6 +71,7 @@ To be done for React components using Jest , enzyme
 ## How to Run
 
 Needs to install the backend counterpart before and start the server and local (or remote) mongo database.
+Express server for this app: https://github.com/dpetrini/costumer .
 
 Using npm:
 ```

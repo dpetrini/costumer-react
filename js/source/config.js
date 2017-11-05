@@ -13,10 +13,3 @@ if (process.env.NODE_ENV === 'production') {
   LOGIN_URL = 'http://127.0.0.1:3000/users/loginclient/';
   LOGOUT_URL = 'http://127.0.0.1:3000/users/logoutclient';
 }
-
-
-// export default class config {
-//   COSTUMERS_URL = 'http://127.0.0.1:3000/costumers/';
-// }
-
-// export const COSTUMERS_URL = 'http://127.0.0.1:3000/costumers/';

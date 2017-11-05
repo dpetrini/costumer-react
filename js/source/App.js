@@ -29,6 +29,7 @@ class App extends Component {
         <div> 
           <NavBarTop />
           <Switch>
+            {/* <Route exact path="/" component={Body} /> */}
             <Route path="/about" component={About} />
             <Route path="/help" component={Help} /> 
             <Route path="/myquotes" component={MyQuotes} />
@@ -53,12 +54,10 @@ function PrivateRoute ({component: Component, authed, ...rest}) {
       {...rest}
       render={(props) => authed === true
         ? <Component {...props} />
-
         : <Redirect to={{pathname: '/login', state: {from: props.location}}} />}
     />
   )
 }
-//        {/* : <Redirect to={{pathname: '/about', state: {from: props.location}}} />} */}
 
 // transform state to props (state change are injected in props in below statements)
 const mapStateToProps = state => (
@@ -67,13 +66,6 @@ const mapStateToProps = state => (
   }
 );
 
-// Thunk
-// const mapDispatchToProps = (dispatch) => {
-//   return {
-//     loginPostData: (url) => dispatch(SystemActionCreators.loginPostData(url)),
-//   };
-// };
-
 // Subscribes any changes in state to the container Scoreboard 
-// export default withRouter(connect(mapStateToProps)(Body))
-export default connect(mapStateToProps/*, mapDispatchToProps*/)(App)
+
+export default connect(mapStateToProps)(App)

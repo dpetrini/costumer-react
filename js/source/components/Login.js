@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Row, Col, Tab, Nav, NavItem, Button, Form, FormGroup, ControlLabel, FormControl } from 'react-bootstrap';
+import { Row, Col, Button, Form, FormGroup, ControlLabel, FormControl } from 'react-bootstrap';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import { withRouter } from 'react-router-dom';
@@ -38,11 +38,10 @@ class Login extends Component {
   constructor(props) {
     super(props);
 
-    this.state = {
-
-    };
+    this.state = {};
 
   }
+
   componentWillReceiveProps(newProps) {
    
     console.log(this.props)
@@ -50,8 +49,6 @@ class Login extends Component {
 
     if (this.props.authorized)
       this.props.history.push('/');
-    // BrowserHistory.push('/');
-    
   }
 
   // If user logged in jump out
@@ -70,12 +67,14 @@ class Login extends Component {
       
   _onSubmit(e) {
 
+    // redux binds
     const { dispatch } = this.props;
     const loginPostData = bindActionCreators((url, data) => SystemActionCreators.loginPostData(url, data), dispatch);
+    
     e.preventDefault();
 
     // Check if fields are validated
-    if (this.state.emailValid != 'success' /*|| this.state.phoneValid != 'success'*/) {
+    if (this.state.emailValid != 'success') {
       this.setState({
         messageValidation: 'Please fill correctly',
       });
@@ -92,6 +91,7 @@ class Login extends Component {
     console.log(deviceData)
 
     loginPostData(config.LOGIN_URL, deviceData)
+    console.log(config.LOGIN_URL)
 
     // Will insert message of deletion/edition address: 
     this.setState({
@@ -160,36 +160,26 @@ class Login extends Component {
           <br />
 
           <Row >
-
             <Col sm={4} />
-
             <Col sm={4}>
-
               <Form horizontal={true} onSubmit={this._onSubmit.bind(this)} action="">
-
                 <FormRow name={'Email'} text={'your email here'} required={true}
                   onChange={this._emailValidate.bind(this)}
                   validation={this.state.emailValid} />
-
                 <FormRow name={'Password'} text={'your password'} required={true}
                   onChange={this._inputChange.bind(this, 'password')}
                 />
-
                 <FormGroup>
                   <Col componentClass={ControlLabel} sm={8} smOffset={1}>
                     <p className="text-left" style={{color: 'red'}}> {this.state.messageValidation}</p>
                   </Col>
-
                   <Col sm={2}>
                     <Button type="submit" className={'btn btn-default btn-lg'}>
                           Login
                     </Button>
                   </Col>
-
                 </FormGroup>
-
               </Form>
-
             </Col>
           </Row>
 
@@ -223,13 +213,10 @@ class Login extends Component {
         </div>
 
         <PricingContainer />
-
-        
+       
         <Row>
           <Col sm={12}>
-
             <img src={'/images/main.jpg'} className={'img-responsive'}/>
-
           </Col>
         </Row>
 
@@ -238,10 +225,7 @@ class Login extends Component {
       </div>
     );
   }
-
 }
-
-// export default Login;
 
 // transform state to props (state change are injected in props in below statements)
 const mapStateToProps = state => (
@@ -250,13 +234,5 @@ const mapStateToProps = state => (
   }
 );
 
-// Thunk
-// const mapDispatchToProps = (dispatch) => {
-//   return {
-//     loginPostData: (url) => dispatch(SystemActionCreators.loginPostData(url)),
-//   };
-// };
-
 // Subscribes any changes in state to the container Scoreboard 
-// export default connect(mapStateToProps/*, mapDispatchToProps*/)(Login)
 export default withRouter(connect(mapStateToProps)(Login));

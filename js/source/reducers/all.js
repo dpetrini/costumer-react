@@ -1,13 +1,16 @@
 import * as SystemActionTypes from '../actiontypes/all';
 
+// Complete state for app, handled by Redux
 const initialState = {
 
+  // Holds the consumption table HSP, monthly consumption and cost
   data: [
     ['HSP', '4.510', '4.990', '4.050', '3.600', '3.190', '2.950', '3.210', '3.710', '3.740', '4.030', '4.990', '4.540'],
     ['Cons. (kWh)', '1000', '1000', '1000', '1000', '1000', '1000', '1000', '1000', '1000', '1000','1000','1000'],
     ['Custo (R$)', '1000', '1000', '1000', '1000', '1000', '1000', '1000', '1000', '1000', '1000','1000','1000'],
   ],
 
+  // Holds the list of HSP (Sunlinght hours per day) month value for some cities
   cityHsp: {
     'São Paulo': ['4.510', '4.990', '4.050', '3.600', '3.190', '2.950', '3.210', '3.710', '3.740', '4.030', '4.990', '4.540'],
     'Santa Cruz do Rio Pardo': ['5.770', '5.460', '5.090', '4.550', '3.910', '3.690', '3.960', '4.510', '5.130', '5.480', '5.890', '6.270'],
@@ -15,18 +18,19 @@ const initialState = {
     'Valinhos': ['5.330', '5.560', '5.220', '4.530', '4.060', '3.560', '4.190', '4.580', '4.750', '5.580', '5.860', '5.530'],
   },
 
+  // Default values for costumer table (stored in db)
   costumerData: [
     ['João', 'Pereira', '11 22987 2222', 'joaopereira@gmail.com', ''],
     ['Silvia', 'Joao', '11 3322 22332', 'silviajoao@gmail.com', ''],
   ],
 
+  // Default values for quotes table (stored in db)
   quotes: [
     ['João', 'Pereira', '8.3', '23/09/2017', 'R$ 985,00', 'Sent'],
     ['Silvia', 'Joao', '5.3', '01/09/2017', 'R$ 12.375,00', 'Follow-up-1'],
   ],
 
-
-  // overall config system data / parent(here) -> child(many) -> parent(here)
+  // overall config system data
   configData: {
     custokWh: 0.68,
     sombreamento: 0.00,
@@ -40,7 +44,7 @@ const initialState = {
     eSensor: true,
   },
 
-  // overall calculations system data / parent(here) -> child
+  // overall calculations system data
   systemData: {
     sysEstimation: 100,
     avgConsumption: 0.00,
@@ -49,7 +53,7 @@ const initialState = {
     hspFinal: 3.90,
   },
 
-  // result calculations / parent(here) -> child(many) -> parent(here)
+  // result calculations, vector for two possible results
   resultData: [ 
     {
       payback: 1,
@@ -71,6 +75,7 @@ const initialState = {
     },
   ],
 
+  // Default and example data for Bar graph. Always calculated runtime
   dataGraph: [
     {name: 'Jan', Geração: 4000, Consumo: 2400 },
     {name: 'Fev', Geração: 3000, Consumo: 1398 },
@@ -87,20 +92,109 @@ const initialState = {
     {name: 'Média', Geração: 2390, Consumo: 3800 },
   ],
 
-
-  selectedCostumer: -1,
-  selectedResult: 0,
-  selectedCity: 'São Paulo',
-  proposalSent: false,
-  authorized: false,
+  selectedCostumer: -1, // Selected costumer from list
+  selectedResult: 0, // Selected result from result panel
+  selectedCity: 'São Paulo', // Selected city for calculations
+  proposalSent: false, // Boolean for proposal sent
+  authorized: false, // Boolean for User authentication in app
 };
 
+// Reducer function
 export default function System(state=initialState, action) {	
 
   console.log(state)
   console.log(action)
 	
   switch (action.type) {
+
+    // Result actions in return of fetch operations (middleware thunk)
+    // *********** Login result OK: authorized
+    case SystemActionTypes.LOGIN_SUCCESS: {
+          
+      console.log('SUCESS LOGIN', action.result);
+          
+      return {
+        ...state,
+        authorized: true,
+      };
+    }
+    
+    // Login failed
+    case SystemActionTypes.LOGIN_NOTFOUND: {
+          
+      console.log('LOGIN NOT FOUND', action.result);
+          
+      return {
+        ...state,
+        authorized: false,
+      };
+    }    
+    
+    // Logout successfull
+    case SystemActionTypes.LOGOUT_SUCCESS: {
+          
+      console.log('SUCESS LOGOUT', action.result);
+          
+      return {
+        ...state,
+        authorized: false,
+      };
+    }
+    
+    // Logout failed
+    case SystemActionTypes.LOGOUT_ERROR: {
+          
+      console.log('LOGOUT ERROR', action.result);
+          
+      return {
+        ...state,
+        authorized: false,
+      };
+    } 
+
+    // *********** Result panel Actions (graphic and results input form)
+    // Update the single visual bar graph with one out of two possible results
+    case SystemActionTypes.UPDATE_BAR_GRAPH: {
+          
+      let localDataGraph = state.dataGraph;
+      let row = state.selectedResult;
+               
+      if (row < 0) 
+        row = 0; 
+          
+      // Calculate generation and load consumption for each month
+      localDataGraph.map((element, index) => {
+        if (index < 12) {
+          element.Geração = parseInt(state.resultData[row].sysProposal * 
+                                  parseFloat(state.data[0][index+1]) * // Each month HSP
+                                  30.41 *
+                                  0.9 *
+                                  (1 - state.configData.sombreamento) *
+                                  (1 - state.configData.azimute));
+          element.Consumo = parseInt(state.data[1][index+1]);
+        } else {
+          element.Geração = parseInt(state.resultData[row].generation);
+          element.Consumo = parseInt(state.systemData.avgConsumption);
+        }
+          
+      })    
+          
+      return {
+        ...state,
+        dataGraph: localDataGraph,
+      };
+    }
+          
+    // Update the result in ResultPanel Component
+    case SystemActionTypes.UPDATE_SELECTED_RESULT: {
+      return {
+        ...state,
+        selectedResult: action.row - 1, // Selected row in result panel
+      };
+    }
+
+    // *********** Main business logic: all caculations
+    // Todo: split in smaller actions
     case SystemActionTypes.UPDATE_DATA: 
     case SystemActionTypes.UPDATE_RESULT_DATA: // Always updating all. To avoid inconsistences 
     {
@@ -142,7 +236,7 @@ export default function System(state=initialState, action) {
       if (state.configData.taxaDisp == 'Bi') {
 
         // temp = media consumo kwh / HSP * Rendimento AP * dias 
-        temp = (avgConsumption - 50) / (hspFinal * 0.9 * 30.41 * // Alterado em 30-09 incluindo as perdas
+        temp = (avgConsumption - 50) / (hspFinal * 0.9 * 30.41 *
                                 (1 - state.configData.sombreamento) *
                                 (1 - state.configData.azimute)
         );
@@ -158,7 +252,7 @@ export default function System(state=initialState, action) {
       } else if (state.configData.taxaDisp == 'Tri') {
 
         // temp = media consumo kwh / HSP * Rendimento AP * dias
-        temp = (avgConsumption - 100) / (hspFinal * 0.9 * 30.41* // Alterado em 30-09 incluindo as perdas
+        temp = (avgConsumption - 100) / (hspFinal * 0.9 * 30.41*
                                 (1 - state.configData.sombreamento) *
                                 (1 - state.configData.azimute)
         );
@@ -216,8 +310,6 @@ export default function System(state=initialState, action) {
 
         resultData[i].payback= (resultData[i].totalCost / (resultData[i].generation * configData.custokWh) ) / 12;
 
-        // console.log( resultData[i].payback, resultData[i].totalCost, resultData[i].generation, parseFloat(configData.custokWh), configData.custokWh );
-
       }            
 
       return {
@@ -228,44 +320,9 @@ export default function System(state=initialState, action) {
       };
     }
 
-    case SystemActionTypes.UPDATE_BAR_GRAPH: {
 
-      let localDataGraph = state.dataGraph;
-      let row = state.selectedResult;
-     
-      if (row < 0) 
-        row = 0; 
 
-      // Calculate generation and load consumption for each month
-      localDataGraph.map((element, index) => {
-        if (index < 12) {
-          element.Geração = parseInt(state.resultData[row].sysProposal * 
-                        parseFloat(state.data[0][index+1]) * // Each month HSP
-                        30.41 *
-                        0.9 *
-                        (1 - state.configData.sombreamento) *
-                        (1 - state.configData.azimute));
-          element.Consumo = parseInt(state.data[1][index+1]);
-        } else {
-          element.Geração = parseInt(state.resultData[row].generation);
-          element.Consumo = parseInt(state.systemData.avgConsumption);
-        }
-
-      })    
-
-      return {
-        ...state,
-        dataGraph: localDataGraph,
-      };
-    }
-
-    case SystemActionTypes.UPDATE_SELECTED_RESULT: {
-      return {
-        ...state,
-        selectedResult: action.row - 1, // Selected row in result panel
-      };
-    }
-
+    // Update city name in selection list for HSP
     case SystemActionTypes.UPDATE_CITY_HSP: {
 
       const newData = state.data;
@@ -285,6 +342,8 @@ export default function System(state=initialState, action) {
       };
     }
 
+    // User clicks on Send Proposal button.
+    // TODO: save to database
     case SystemActionTypes.PROPOSAL_SENT: {
       
       const quotes = state.quotes;
@@ -305,7 +364,10 @@ export default function System(state=initialState, action) {
       };
     }
 
-    //THUNK
+    // THUNK MW related actions
+
+    // Result from Fetch costumers from database to Costumers component
+    //  update from db to state.
     case SystemActionTypes.ITEMS_FETCH_DATA_SUCCESS: {
 
       console.log('SUCESS FETCH', action.items);
@@ -331,6 +393,7 @@ export default function System(state=initialState, action) {
       };
     }
 
+    // Sucessfull new costumer posted to database
     case SystemActionTypes.ITEMS_POST_DATA_SUCCESS: {
       
       console.log('SUCESS POST', action.result);
@@ -340,45 +403,7 @@ export default function System(state=initialState, action) {
       };
     }
 
-    //Login
-    case SystemActionTypes.LOGIN_SUCCESS: {
-      
-      console.log('SUCESS LOGIN', action.result);
-      
-      return {
-        ...state,
-        authorized: true,
-      };
-    }
-    case SystemActionTypes.LOGIN_NOTFOUND: {
-      
-      console.log('LOGIN NOT FOUND', action.result);
-      
-      return {
-        ...state,
-        authorized: false,
-      };
-    }    
-
-    //Logout
-    case SystemActionTypes.LOGOUT_SUCCESS: {
-      
-      console.log('SUCESS LOGOUT', action.result);
-      
-      return {
-        ...state,
-        authorized: false,
-      };
-    }
-    case SystemActionTypes.LOGOUT_ERROR: {
-      
-      console.log('LOGOUT ERROR', action.result);
-      
-      return {
-        ...state,
-        authorized: false,
-      };
-    }   
+  
     
     default:
       return state;
