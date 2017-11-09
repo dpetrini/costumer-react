@@ -71,11 +71,11 @@ class Body extends Component {
     const updateBarGraph = bindActionCreators(SystemActionCreators.updateBarGraph, dispatch);
     const updateSelectedResult = bindActionCreators(SystemActionCreators.updateSelectedResult, dispatch);
     const updateCityHsp = bindActionCreators(SystemActionCreators.updateCityHsp, dispatch);
-    const proposalSent = bindActionCreators(SystemActionCreators.proposalSent, dispatch);
 
     // Thunk MW for fetches - with this dont need mapDispatchToProps
     const fetchData = bindActionCreators((url) =>SystemActionCreators.costumerFetchData(url), dispatch);
     const postData = bindActionCreators((url, data) =>SystemActionCreators.costumerPostData(url, data), dispatch);
+    const sendProposal = bindActionCreators((url, data) =>SystemActionCreators.proposalPostData(url, data), dispatch);
 
     return (
 
@@ -160,7 +160,7 @@ class Body extends Component {
                     costumer={fullData.costumerData} 
                     resultData={fullData.resultData}
                     systemData={fullData.systemData}
-                    onSendProposal={proposalSent}
+                    onSendProposal={sendProposal}
                     dataGraph={fullData.dataGraph}
                     fetchData={fetchData}/>
                 </Tab.Pane>

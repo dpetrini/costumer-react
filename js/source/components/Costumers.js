@@ -13,9 +13,9 @@ class Costumers extends Component {
   // ES7 Property Initializers - babel stage-0
   // http://egorsmirnov.me/2015/06/14/react-and-es6-part2.html
   state = {
-    costumerData: this.props.costumerData,
     newCostumer: false,
     costumerIndex: null,
+    localCostumer: [],
   };
 
   // For costumer list, notify the index
@@ -33,26 +33,13 @@ class Costumers extends Component {
   // Add the new costumer from popup
   onCostumerDataChange(costumerData) {
 
-    let data = {
-      firstName: costumerData[0],
-      lastName: costumerData[1],
-      contactNumber: costumerData[2],
-      email: costumerData[3],
-    };
-
-    this.props.postData(config.COSTUMERS_URL, data);
-    console.log(data)
-
+    this.props.postData(config.COSTUMERS_URL, costumerData);
+    console.log(costumerData)
 
     // This is not a good place for below update fetch.
     // TODO: solve it
     this.props.fetchData(config.COSTUMERS_URL);
 
-    // change local state to updated table now
-    // this.state.costumerData.push(costumerData);
-    // this.setState({
-    //   costumerData: this.state.costumerData,
-    // });
   }
 
   // New Costumer Popup life cycle Call
@@ -95,6 +82,11 @@ class Costumers extends Component {
   componentDidMount () {
     this.props.fetchData(config.COSTUMERS_URL);
   }
+
+  componentWillReceiveProps(nextProps) {
+
+  }
+
 
   render() {
 

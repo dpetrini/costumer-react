@@ -1,8 +1,11 @@
 import React, { Component } from 'react';
+import ReactDOM from 'react-dom';
 import PropTypes from 'prop-types';
 import { Button } from 'react-bootstrap';
 
 import SolarBarChart from './Barchart'
+
+import * as config from '../config'
 
 class Proposal extends Component {
   constructor(props) {
@@ -14,10 +17,43 @@ class Proposal extends Component {
   // Fire redux action
   proposalButton() {
     var timeNow = new Date();
+ 
+    //let chartSVG = ReactDOM.findDOMNode(this.currentChart.currentChart).children[0];
+    //console.log(chartSVG)
+    //let svgURL = new XMLSerializer().serializeToString(chartSVG);
+    //let svgBlob = new Blob([svgURL], {type: 'image/svg+xml;charset=utf-8'});
+    ////  let svgBlob = new Blob([chartSVG.outerHTML], {type: "text/html;charset=utf-8"});
+    //console.log(svgURL)
 
-    this.props.onSendProposal(this.costumerName, this.costumerLastName, 
-      this.props.resultData[0].sysProposal, timeNow.toISOString(), 
-      this.props.resultData[0].totalCost, 'Sent')
+    // From here on will submit
+    const proposalData	= {
+      firstName: this.costumerName,
+      lastName:  this.costumerLastName,
+      avgConsumption: this.props.systemData.avgConsumption,
+      sysProposal: this.props.resultData[0].sysProposal,
+      panels: this.props.resultData[0].panels,
+      totalCost: this.props.resultData[0].totalCost,
+      payback: this.props.resultData[0].payback,
+      gerCost: this.props.systemData.gerCost,
+      avgCost: this.props.systemData.avgCost,
+      status: 'sent',
+      date: timeNow.toISOString(),
+    };
+
+    if (this.costumerName === null && this.props.systemData.avgCost === 0) {
+      console.log('Empty proposal. Not done.')
+      return;
+    }
+
+    console.log(proposalData)
+
+    // Will insert message of deletion/edition address: 
+    this.setState({
+      messageValidation: 'Success! Please close to return',
+    });
+
+    this.props.onSendProposal(config.PROPOSAL_URL, proposalData);
+
   }
 
   render () {
@@ -67,7 +103,11 @@ Nesse preço ainda podemos ter promoções, depende um pouco da ocasião.<br />
 E terá uma curva de produção como abaixo:<br />
 
         <br />
-        <SolarBarChart data={this.props.dataGraph}/>
+        <SolarBarChart 
+          id="currentChart" 
+          ref={(chart) => this.currentChart = chart} 
+          data={this.props.dataGraph}
+        />
         <br />
 
 
@@ -85,6 +125,7 @@ Atenciosamente,<br />
         <p>
           <Button onClick={(e) => this.proposalButton()}> Envia Proposta »</Button>
         </p>
+        
       </div>
 
     );

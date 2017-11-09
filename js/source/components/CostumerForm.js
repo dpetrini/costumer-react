@@ -45,20 +45,15 @@ class CostumerForm extends Component {
     }
 
     // From here on will submit
-
-    // const deviceData	= {
-    //   firstName: this.state.firstName,
-    //   lastName: this.state.lastName,
-    //   contactNumber: this.state.contactNumber,
-    //   emailAddress: this.state.emailAddress,
-    // };
-
-    const deviceData = [
-      this.state.firstName, 
-      this.state.lastName, 
-      this.state.contactNumber, 
-      this.state.emailAddress,
-    ];
+    const deviceData	= {
+      firstName: this.state.firstName,
+      lastName:  this.state.lastName,
+      contactNumber: this.state.contactNumber,
+      address: this.state.address,
+      city: this.state.city,
+      state: this.state.state,
+      email: this.state.emailAddress,
+    };
 
     console.log(deviceData)
 
@@ -122,17 +117,29 @@ class CostumerForm extends Component {
       <div>
         <Form horizontal={true} onSubmit={this._onSubmit.bind(this)} action="">
   
-          <FormRow name={'First Name'} text={'your first name'} required={true}
+          <FormRow name={'Nome'} text={'your first name'} required={true}
             onChange={this._inputChange.bind(this, 'firstName')}
           />
 
-          <FormRow name={'Last Name'} text={'your last name'} required={false}
+          <FormRow name={'Sobrenome'} text={'your last name'} required={false}
             onChange={this._inputChange.bind(this, 'lastName')}
           />
 
-          <FormRow name={'Contact Number'} text={'your contact number'} required={true}
+          <FormRow name={'Telefone'} text={'your contact number'} required={true}
             onChange={this._phoneValidate.bind(this)}
             validation={this.state.phoneValid} />
+
+          <FormRow name={'Endereço'} text={'Rua,av, e n°'} required={false}
+            onChange={this._inputChange.bind(this, 'address')}
+          />      
+
+          <FormRow name={'Cidade'} text={'Cidade'} required={false}
+            onChange={this._inputChange.bind(this, 'city')}
+          />
+
+          <FormRow name={'Estado'} text={'Estado'} required={false}
+            onChange={this._inputChange.bind(this, 'state')}
+          />
 
           <FormRow name={'Email'} text={'your email here'} required={true}
             onChange={this._emailValidate.bind(this)}

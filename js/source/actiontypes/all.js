@@ -10,7 +10,10 @@ export const UPDATE_SELECTED_RESULT = 'result/UPDATE_SELECTED_RESULT';
 // export const SELECT_COSTUMER = 'costumer/SELECT_COSTUMER';
 export const ADD_COSTUMER = 'costumer/ADD_COSTUMER';
 
-export const PROPOSAL_SENT = 'proposal/PROPOSAL_SENT'
+// Proposal actions
+export const PROPOSAL_SEND_SUCCESS = 'proposal/PROPOSAL_SEND_SUCCESS'
+export const PROPOSAL_SEND_FAIL = 'proposal/PROPOSAL_SEND_FAIL'
+export const PROPOSAL_GET_DATA_SUCESS = 'proposal/PROPOSAL_GET_DATA_SUCESS'
 
 // Fetch items
 export const ITEMS_FETCH_DATA_SUCCESS = 'fetch/ITEMS_FETCH_DATA_SUCCESS'

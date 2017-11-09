@@ -16,6 +16,7 @@ const initialState = {
     'Santa Cruz do Rio Pardo': ['5.770', '5.460', '5.090', '4.550', '3.910', '3.690', '3.960', '4.510', '5.130', '5.480', '5.890', '6.270'],
     'Ourinhos': ['5.800', '5.480', '5.070', '4.530', '3.890', '3.640', '3.920', '4.510', '5.120', '5.490', '5.900', '6.290'],
     'Valinhos': ['5.330', '5.560', '5.220', '4.530', '4.060', '3.560', '4.190', '4.580', '4.750', '5.580', '5.860', '5.530'],
+    'Curvelo/MG': ['6.160', '5.750', '5.310', '4.830', '4.300', '3.980', '4.180', '4.800', '4.950', '5.280', '5.440', '5.22'],
   },
 
   // Default values for costumer table (stored in db)
@@ -26,8 +27,8 @@ const initialState = {
 
   // Default values for quotes table (stored in db)
   quotes: [
-    ['João', 'Pereira', '8.3', '23/09/2017', 'R$ 985,00', 'Sent'],
-    ['Silvia', 'Joao', '5.3', '01/09/2017', 'R$ 12.375,00', 'Follow-up-1'],
+    { firstName: 'João', lastName: 'Pereira', sysProposal: '8.3', date: '23/09/2017', totalCost: 'R$ 986,00', status: 'Sent'},
+    { firstName: 'Silvia', lastName: 'Joao', sysProposal: '5.3', date: '01/09/2017', totalCost: 'R$ 12.375,00', status: 'Follow-up-1'},
   ],
 
   // overall config system data
@@ -151,6 +152,66 @@ export default function System(state=initialState, action) {
         authorized: false,
       };
     } 
+
+    // ***********  User clicks on Send Proposal button.
+    // Get proposal data from db
+    case SystemActionTypes.PROPOSAL_GET_DATA_SUCESS: {
+
+      console.log('SUCCESS Get Proposal', action.result);
+
+      // let quotes = state.quotes;
+
+      // action.result.forEach(function(element) {
+
+      //   const proposalData	= {
+      //     _id: element._id, 
+      //     firstName: element.Name,
+      //     lastName:  element.LastName,
+      //     avgConsumption: element.avgConsumption,
+      //     sysProposal: element.sysProposal,
+      //     panels: element.panels,
+      //     totalCost: element.totalCost,
+      //     payback: element.payback,
+      //     gerCost: element.gerCost,
+      //     avgCost: element.avgCost,
+      //     status: element.status,
+      //     date: element.date,
+      //   };
+
+      //   quotes.push(proposalData);
+
+      // }, this);
+
+      // console.log(quotes)
+      
+      return {
+        ...state,
+        quotes: action.result,
+      };
+    }
+
+      
+
+    case SystemActionTypes.PROPOSAL_SEND_SUCCESS: {
+          
+      console.log('Proposal send with success.', action.result);
+          
+      return {
+        ...state,
+        proposalSent: true,
+      };
+    }    
+    
+    // Logout successfull
+    case SystemActionTypes.PROPOSAL_SEND_FAIL: {
+          
+      console.log('Error in sending proposal to server.', action.result);
+          
+      return {
+        ...state,
+        proposalSent: false,
+      };
+    }
 
     // *********** Result panel Actions (graphic and results input form)
     // Update the single visual bar graph with one out of two possible results
@@ -342,27 +403,7 @@ export default function System(state=initialState, action) {
       };
     }
 
-    // ***********  User clicks on Send Proposal button.
-    // TODO: save to database
-    case SystemActionTypes.PROPOSAL_SENT: {
-      
-      const quotes = state.quotes;
 
-      quotes.push([
-        action.name, 
-        action.lastName, 
-        action.sysProposal, 
-        action.timeNow, 
-        action.totalCost,
-        action.status,
-      ]);
-
-      return {
-        ...state,
-        quotes: quotes,
-        proposalSent: true,
-      };
-    }
 
     // Other THUNK MW related actions
 
@@ -380,11 +421,12 @@ export default function System(state=initialState, action) {
           element.lastName, 
           element.contactNumber, 
           element.email,
+          // element._id,
           '',
         ];
         costumerData.push(tempData);
-      }, this);
-
+      }, this); 
+      
       console.log(costumerData)
 
       return {

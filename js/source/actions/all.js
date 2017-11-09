@@ -117,22 +117,19 @@ export function costumerPostData(url, data) {
         if (!response.ok) {
           throw Error(response.statusText);
         }
+
         dispatch(itemsIsLoading(false));
         
         if (response.statusText === 'OK') {
           dispatch(itemsPostDataSuccess(response.statusText))
-
           // Fetches  again to update Costumer list in UI safely
           costumerFetchData(url)
-
         } else {
           dispatch(itemsHasErrored(true));
         }
 
-        return;// response;
+        return;
       })
-      // .then((response) => response.json())
-      // .then((response) => dispatch(itemsPostDataSuccess(response)))
       .catch(() => dispatch(itemsHasErrored(true)));
   };
 }
@@ -143,6 +140,80 @@ export const itemsPostDataSuccess = result => {
     result,
   };
 };
+
+// Proposal sending Actions
+export const proposalSendSuccess = result => {
+  return {
+    type: SystemActionTypes.PROPOSAL_SEND_SUCCESS,
+    result,
+  };
+};
+
+export const proposalSendFail = result => {
+  return {
+    type: SystemActionTypes.PROPOSAL_SEND_FAIL,
+    result,
+  };
+};
+
+export function proposalPostData(url, data) {
+  return (dispatch) => {
+    dispatch(itemsIsLoading(true));
+    
+    fetch(url, {
+      method: 'POST',
+      headers: {
+        'Accept': 'application/json',
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(data), // this.state
+    })
+      .then((response) => {
+        if (!response.ok) {
+          throw Error(response.statusText);
+        }
+
+        dispatch(itemsIsLoading(false));
+        
+        if (response.statusText === 'OK') {
+          dispatch(proposalSendSuccess(response.statusText))
+        } else {
+          dispatch(proposalSendFail(true));
+        }
+
+        return;
+      })
+      .catch(() => dispatch(itemsHasErrored(true)));
+  };
+}
+
+// Reads Costumer data from server
+export function proposalGetData(url) {
+  return (dispatch) => {
+    dispatch(itemsIsLoading(true));
+
+    fetch(url)
+      .then((response) => {
+        if (!response.ok) {
+          throw Error(response.statusText);
+        }
+        dispatch(itemsIsLoading(false));
+        return response;
+      })
+      .then((response) => response.json())
+      .then((items) => dispatch(proposalGetDataSuccess(items)))
+      .catch(() => dispatch(itemsHasErrored(true)));
+  };
+}
+
+export const proposalGetDataSuccess = result => {
+
+  return {
+    type: SystemActionTypes.PROPOSAL_GET_DATA_SUCESS,
+    result,
+  };
+};
+
 
 // Login Actions
 export const loginSuccess = result => {
