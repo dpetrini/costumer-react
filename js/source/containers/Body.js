@@ -66,6 +66,7 @@ class Body extends Component {
     console.log(this.props)
 
     // Bind functions to be called by child with dispatch to store
+    const initApp = bindActionCreators(SystemActionCreators.initApp, dispatch);
     const updateData = bindActionCreators(SystemActionCreators.updateData, dispatch);
     const updateResult = bindActionCreators(SystemActionCreators.updateResult, dispatch);
     const updateBarGraph = bindActionCreators(SystemActionCreators.updateBarGraph, dispatch);
@@ -162,7 +163,7 @@ class Body extends Component {
                     systemData={fullData.systemData}
                     onSendProposal={sendProposal}
                     dataGraph={fullData.dataGraph}
-                    fetchData={fetchData}/>
+                    initApp={initApp}/>
                 </Tab.Pane>
               
               </Tab.Content>

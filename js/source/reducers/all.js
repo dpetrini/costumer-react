@@ -59,7 +59,7 @@ const initialState = {
     {
       payback: 1,
       panels: 1,
-      kitCost: 100,
+      kitCost: 1000,
       sysProposal: 0.00,
       ratio: 0.00,
       generation: 0.00,
@@ -68,7 +68,7 @@ const initialState = {
     {
       payback: 1,
       panels: 1,
-      kitCost: 100,
+      kitCost: 1000,
       sysProposal: 0.00,
       ratio: 0.00,
       generation: 0.00,
@@ -107,6 +107,18 @@ export default function System(state=initialState, action) {
   console.log(action)
 	
   switch (action.type) {
+
+    // Set a initial state value for app in loading and after proposal cycle
+    case SystemActionTypes.INIT_APP: {
+      
+      console.log('INIT APP', action.data);
+      
+      return {
+        ...state,
+        proposalSent: false,
+      };
+
+    }
 
     // Result actions in return of fetch operations (middleware thunk)
     // *********** Login result OK: authorized
@@ -159,10 +171,8 @@ export default function System(state=initialState, action) {
 
       console.log('SUCCESS Get Proposal', action.result);
 
-      // let quotes = state.quotes;
-
-      // action.result.forEach(function(element) {
-
+      // Shape from quotes coming from DB:
+      //
       //   const proposalData	= {
       //     _id: element._id, 
       //     firstName: element.Name,
@@ -177,21 +187,13 @@ export default function System(state=initialState, action) {
       //     status: element.status,
       //     date: element.date,
       //   };
-
-      //   quotes.push(proposalData);
-
-      // }, this);
-
-      // console.log(quotes)
       
       return {
         ...state,
         quotes: action.result,
       };
     }
-
       
-
     case SystemActionTypes.PROPOSAL_SEND_SUCCESS: {
           
       console.log('Proposal send with success.', action.result);
@@ -402,7 +404,6 @@ export default function System(state=initialState, action) {
         selectedCity: action.city, // Selected row in result panel
       };
     }
-
 
 
     // Other THUNK MW related actions

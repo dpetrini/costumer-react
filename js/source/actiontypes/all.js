@@ -1,3 +1,4 @@
+export const INIT_APP = 'data/INIT_APP';
 export const UPDATE_DATA = 'data/UPDATE_DATA';
 
 // export const UPDATE_SYSTEM_DATA = 'system/UPDATE_SYSTEM_DATA';

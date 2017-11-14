@@ -24,7 +24,7 @@ function toLocaleStringSupportsLocales() {
   return false;
 }
 
-var ValueRow = function ({option, generation, value, ratio, panels, totalCost, onBlur, onChange, onRadioClick, addon}) {
+var ValueRow = function ({option, generation, sysProposal, ratio, panels, kitCost, totalCost, onBlur, onChange, onRadioClick, addon}) {
   return (
     <div className="row panel">
 
@@ -37,12 +37,12 @@ var ValueRow = function ({option, generation, value, ratio, panels, totalCost, o
           <div className="form-group">
             <div className="input-group">
               <input type="number" 
-                step={'0.1'}
+                step={0.1}
                 className="form-control text-center" 
                 name={`power-${option}`} 
                 onBlur={onBlur} 
                 onChange={onChange} 
-                defaultValue={value} />
+                defaultValue={sysProposal} />
             </div>
           </div>
         </form>
@@ -60,7 +60,7 @@ var ValueRow = function ({option, generation, value, ratio, panels, totalCost, o
                 name={`panels-${option}`} 
                 onBlur={onBlur} 
                 onChange={onChange} 
-                defaultValue={1} />
+                defaultValue={panels} />
             </div>
           </div>
         </form>
@@ -70,13 +70,13 @@ var ValueRow = function ({option, generation, value, ratio, panels, totalCost, o
         <form className="form-inline">
           <div className="form-group">
             <div className="input-group">
-              <input type="number" 
+              <input type="number"
+                step={50}
                 className="form-control text-center" 
                 name={`kitCost-${option}`} 
                 onBlur={onBlur} 
                 onChange={onChange} 
-                defaultValue={100} />
-              <div className="valuerow input-group-addon"> {addon} </div>
+                defaultValue={kitCost} />
             </div>
           </div>
         </form>
@@ -102,17 +102,17 @@ class ResultPanel extends Component {
 
     switch (e.target.name) {
       case 'power-1':
-        resultData[0].sysProposal = e.target.value;
+        resultData[0].sysProposal = parseFloat(e.target.value);
         break;
       case 'power-2':
-        resultData[1].sysProposal = e.target.value;
+        resultData[1].sysProposal = parseFloat(e.target.value);
         break;
 
       case 'kitCost-1':
-        resultData[0].kitCost = e.target.value;
+        resultData[0].kitCost = parseInt(e.target.value);
         break;
       case 'kitCost-2':
-        resultData[1].kitCost = e.target.value;
+        resultData[1].kitCost = parseInt(e.target.value);
         break;
 
       case 'panels-1':
@@ -158,10 +158,11 @@ class ResultPanel extends Component {
             <ValueRow option={1}
               generation={this.props.resultData[0].generation.toFixed(0).toString()} 
               ratio={`${this.props.resultData[0].ratio.toFixed(0).toString()} %`} 
-              panels={10}
+              panels={parseInt(this.props.resultData[0].panels)}
+              kitCost={parseInt(this.props.resultData[0].kitCost)}
               totalCost={this.props.resultData[0].totalCost}
               addon=""
-              value={'5'}
+              sysProposal={5}
               onBlur={(e) => this._inputBlur(e)} 
               onChange={(e) => this._inputChange(e)}
               onRadioClick={(e) => this._radioClick(e)}/>
@@ -169,10 +170,11 @@ class ResultPanel extends Component {
             <ValueRow option={2}
               generation={this.props.resultData[1].generation.toFixed(0).toString()} 
               ratio={`${this.props.resultData[1].ratio.toFixed(0).toString()} %`} 
-              panels={10}
+              panels={parseInt(this.props.resultData[1].panels)}
+              kitCost={parseInt(this.props.resultData[1].kitCost)}
               totalCost={this.props.resultData[1].totalCost}
               addon=""
-              value={'8'}
+              sysProposal={8}
               onBlur={(e) => this._inputBlur(e)} 
               onChange={(e) => this._inputChange(e)}
               onRadioClick={(e) => this._radioClick(e)}/>

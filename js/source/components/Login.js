@@ -69,7 +69,9 @@ class Login extends Component {
 
     // redux binds
     const { dispatch } = this.props;
-    const loginPostData = bindActionCreators((url, data) => SystemActionCreators.loginPostData(url, data), dispatch);
+    const loginPostData = bindActionCreators(
+      (url, data) => SystemActionCreators.loginPostData(url, data), 
+      dispatch);
     
     e.preventDefault();
 

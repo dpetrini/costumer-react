@@ -1,5 +1,13 @@
 import * as SystemActionTypes from '../actiontypes/all';
 
+// Used to configure in app initial load and after proposal cycle
+export const initApp = data => {
+  return {
+    type: SystemActionTypes.INIT_APP,
+    data,
+  };
+};
+
 // Update user changed values in UI - asl calculations - Actions
 export const updateData = data => {
   return {
@@ -46,17 +54,17 @@ export const addCostumer = costumerData => {
 };
 
 // Response Action to proposal button clicked
-export const proposalSent = (name, lastName, sysProposal, timeNow, totalCost, status) => {
-  return {
-    type: SystemActionTypes.PROPOSAL_SENT,
-    name, 
-    lastName, 
-    sysProposal, 
-    timeNow, 
-    totalCost, 
-    status,
-  };
-};
+// export const proposalSent = (name, lastName, sysProposal, timeNow, totalCost, status) => {
+//   return {
+//     type: SystemActionTypes.PROPOSAL_SENT,
+//     name, 
+//     lastName, 
+//     sysProposal, 
+//     timeNow, 
+//     totalCost, 
+//     status,
+//   };
+// };
 
 // e vamos lá para o MW thunk e essa complexidade para fetch...
 // thunk action creators

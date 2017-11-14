@@ -100,7 +100,9 @@ class Costumers extends Component {
         <p>
           <Button onClick={this.callNewCostumerPopup.bind(this)} >Novo Cliente »</Button>
         </p>
-        {this.renderPopup(this.state.newCostumer, 'Novo Cliente', <CostumerForm onDataChange={this.onCostumerDataChange.bind(this)}/>, this.onCloseNewCostumerPopup.bind(this))}
+        {this.renderPopup(this.state.newCostumer, 'Novo Cliente', 
+          <CostumerForm onDataChange={this.onCostumerDataChange.bind(this)}/>, 
+          this.onCloseNewCostumerPopup.bind(this))}
       </div>
     );
   }
