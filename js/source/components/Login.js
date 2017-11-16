@@ -4,7 +4,7 @@ import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import { withRouter } from 'react-router-dom';
 
-import * as SystemActionCreators from '../actions/all';
+import * as AuthActionCreators from '../actions/auth';
 import * as config from '../config';
 
 import PricingContainer from './PricingContainer'
@@ -70,7 +70,7 @@ class Login extends Component {
     // redux binds
     const { dispatch } = this.props;
     const loginPostData = bindActionCreators(
-      (url, data) => SystemActionCreators.loginPostData(url, data), 
+      (url, data) => AuthActionCreators.loginPostData(url, data), 
       dispatch);
     
     e.preventDefault();
@@ -232,7 +232,7 @@ class Login extends Component {
 // transform state to props (state change are injected in props in below statements)
 const mapStateToProps = state => (
   { 
-    authorized: state.authorized,
+    authorized: state.authorized.authorized,
   }
 );
 

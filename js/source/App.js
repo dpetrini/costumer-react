@@ -62,7 +62,7 @@ function PrivateRoute ({component: Component, authed, ...rest}) {
 // transform state to props (state change are injected in props in below statements)
 const mapStateToProps = state => (
   { 
-    authorized: state.authorized,
+    authorized: state.authorized.authorized,
   }
 );
 

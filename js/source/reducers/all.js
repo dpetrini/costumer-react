@@ -1,4 +1,10 @@
+import { combineReducers } from 'redux'
+
 import * as SystemActionTypes from '../actiontypes/all';
+
+import authorized from './auth';
+import proposals from './proposals';
+import costumers from './costumers';
 
 // Complete state for app, handled by Redux
 const initialState = {
@@ -18,18 +24,6 @@ const initialState = {
     'Valinhos': ['5.330', '5.560', '5.220', '4.530', '4.060', '3.560', '4.190', '4.580', '4.750', '5.580', '5.860', '5.530'],
     'Curvelo/MG': ['6.160', '5.750', '5.310', '4.830', '4.300', '3.980', '4.180', '4.800', '4.950', '5.280', '5.440', '5.22'],
   },
-
-  // Default values for costumer table (stored in db)
-  costumerData: [
-    ['João', 'Pereira', '11 22987 2222', 'joaopereira@gmail.com', ''],
-    ['Silvia', 'Joao', '11 3322 22332', 'silviajoao@gmail.com', ''],
-  ],
-
-  // Default values for quotes table (stored in db)
-  quotes: [
-    { firstName: 'João', lastName: 'Pereira', sysProposal: '8.3', date: '23/09/2017', totalCost: 'R$ 986,00', status: 'Sent'},
-    { firstName: 'Silvia', lastName: 'Joao', sysProposal: '5.3', date: '01/09/2017', totalCost: 'R$ 12.375,00', status: 'Follow-up-1'},
-  ],
 
   // overall config system data
   configData: {
@@ -93,18 +87,12 @@ const initialState = {
     {name: 'Média', Geração: 2390, Consumo: 3800 },
   ],
 
-  selectedCostumer: -1, // Selected costumer from list
   selectedResult: 0, // Selected result from result panel
   selectedCity: 'São Paulo', // Selected city for calculations
-  proposalSent: false, // Boolean for proposal sent
-  authorized: false, // Boolean for User authentication in app
 };
 
 // Reducer function
-export default function System(state=initialState, action) {	
-
-  console.log(state)
-  console.log(action)
+export const data = (state=initialState, action) => {	
 	
   switch (action.type) {
 
@@ -115,103 +103,7 @@ export default function System(state=initialState, action) {
       
       return {
         ...state,
-        proposalSent: false,
-      };
-
-    }
-
-    // Result actions in return of fetch operations (middleware thunk)
-    // *********** Login result OK: authorized
-    case SystemActionTypes.LOGIN_SUCCESS: {
-          
-      console.log('SUCESS LOGIN', action.result);
-          
-      return {
-        ...state,
-        authorized: true,
-      };
-    }
-    
-    // Login failed
-    case SystemActionTypes.LOGIN_NOTFOUND: {
-          
-      console.log('LOGIN NOT FOUND', action.result);
-          
-      return {
-        ...state,
-        authorized: false,
-      };
-    }    
-    
-    // Logout successfull
-    case SystemActionTypes.LOGOUT_SUCCESS: {
-          
-      console.log('SUCESS LOGOUT', action.result);
-          
-      return {
-        ...state,
-        authorized: false,
-      };
-    }
-    
-    // Logout failed
-    case SystemActionTypes.LOGOUT_ERROR: {
-          
-      console.log('LOGOUT ERROR', action.result);
-          
-      return {
-        ...state,
-        authorized: false,
-      };
-    } 
-
-    // ***********  User clicks on Send Proposal button.
-    // Get proposal data from db
-    case SystemActionTypes.PROPOSAL_GET_DATA_SUCESS: {
-
-      console.log('SUCCESS Get Proposal', action.result);
-
-      // Shape from quotes coming from DB:
-      //
-      //   const proposalData	= {
-      //     _id: element._id, 
-      //     firstName: element.Name,
-      //     lastName:  element.LastName,
-      //     avgConsumption: element.avgConsumption,
-      //     sysProposal: element.sysProposal,
-      //     panels: element.panels,
-      //     totalCost: element.totalCost,
-      //     payback: element.payback,
-      //     gerCost: element.gerCost,
-      //     avgCost: element.avgCost,
-      //     status: element.status,
-      //     date: element.date,
-      //   };
-      
-      return {
-        ...state,
-        quotes: action.result,
-      };
-    }
-      
-    case SystemActionTypes.PROPOSAL_SEND_SUCCESS: {
-          
-      console.log('Proposal send with success.', action.result);
-          
-      return {
-        ...state,
-        proposalSent: true,
-      };
-    }    
-    
-    // Logout successfull
-    case SystemActionTypes.PROPOSAL_SEND_FAIL: {
-          
-      console.log('Error in sending proposal to server.', action.result);
-          
-      return {
-        ...state,
-        proposalSent: false,
+        // proposalSent: false,
       };
     }
 
@@ -405,49 +297,18 @@ export default function System(state=initialState, action) {
       };
     }
 
-
-    // Other THUNK MW related actions
-
-    // ***********  Result from Fetch costumers from database to Costumers component
-    // Update from db to state.
-    case SystemActionTypes.ITEMS_FETCH_DATA_SUCCESS: {
-
-      console.log('SUCCESS FETCH', action.items);
-
-      const costumerData = [];
-
-      action.items.forEach(function(element) {
-        const tempData = [
-          element.firstName, 
-          element.lastName, 
-          element.contactNumber, 
-          element.email,
-          // element._id,
-          '',
-        ];
-        costumerData.push(tempData);
-      }, this); 
-      
-      console.log(costumerData)
-
-      return {
-        ...state,
-        costumerData: costumerData,
-      };
-    }
-
-    // Sucessfull new costumer posted to database
-    case SystemActionTypes.ITEMS_POST_DATA_SUCCESS: {
-      
-      console.log('SUCESS POST', action.result);
-      
-      return {
-        ...state,
-      };
-    }
-
     // Default state: no changes
     default:
       return state;
   }
 }
+
+
+export const reducers = combineReducers({
+  data: data,
+  authorized: authorized,
+  proposals: proposals,
+  costumers: costumers,
+})
+
+export default reducers

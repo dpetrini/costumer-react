@@ -9,26 +9,18 @@ export const UPDATE_BAR_GRAPH = 'result/UPDATE_BAR_GRAPH';
 export const UPDATE_SELECTED_RESULT = 'result/UPDATE_SELECTED_RESULT';
 
 // export const SELECT_COSTUMER = 'costumer/SELECT_COSTUMER';
-export const ADD_COSTUMER = 'costumer/ADD_COSTUMER';
+// export const ADD_COSTUMER = 'costumer/ADD_COSTUMER';
 
-// Proposal actions
-export const PROPOSAL_SEND_SUCCESS = 'proposal/PROPOSAL_SEND_SUCCESS'
-export const PROPOSAL_SEND_FAIL = 'proposal/PROPOSAL_SEND_FAIL'
-export const PROPOSAL_GET_DATA_SUCESS = 'proposal/PROPOSAL_GET_DATA_SUCESS'
+// // // Proposal actions
+// // export const PROPOSAL_SEND_SUCCESS = 'proposal/PROPOSAL_SEND_SUCCESS'
+// // export const PROPOSAL_SEND_FAIL = 'proposal/PROPOSAL_SEND_FAIL'
+// // export const PROPOSAL_GET_DATA_SUCESS = 'proposal/PROPOSAL_GET_DATA_SUCESS'
 
-// Fetch items
-export const ITEMS_FETCH_DATA_SUCCESS = 'fetch/ITEMS_FETCH_DATA_SUCCESS'
-export const ITEMS_IS_LOADING = 'fetch/ITEMS_IS_LOADING'
-export const ITEMS_HAS_ERRORED = 'fetch/ITEMS_HAS_ERRORED'
+// // Fetch items
+// export const ITEMS_FETCH_DATA_SUCCESS = 'fetch/ITEMS_FETCH_DATA_SUCCESS'
+// export const ITEMS_IS_LOADING = 'fetch/ITEMS_IS_LOADING'
+// export const ITEMS_HAS_ERRORED = 'fetch/ITEMS_HAS_ERRORED'
 
-export const ITEMS_POST_DATA_SUCCESS = 'fetch/ITEMS_POST_DATA_SUCCESS'
+// export const ITEMS_POST_DATA_SUCCESS = 'fetch/ITEMS_POST_DATA_SUCCESS'
 
-// Login/Logout/Sign Up
-export const LOGIN_SUCCESS = 'login/LOGIN_SUCCESS'
-export const LOGIN_NOTFOUND = 'login/LOGIN_NOTFOUND'
 
-export const LOGOUT_SUCCESS = 'login/LOGOUT_SUCCESS'
-export const LOGOUT_ERROR = 'login/LOGOUT_ERROR'
-
-export const SIGNUP_SUCCESS = 'signup/SIGNUP_SUCCESS'
-export const SIGNUP_FAILURE = 'login/SIGNUP_FAILURE'

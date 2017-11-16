@@ -4,7 +4,7 @@ import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import { Row, Col, Tab, Nav, NavItem, Table } from 'react-bootstrap';
 
-import * as SystemActionCreators from '../actions/all';
+import * as ProposalActionCreators from '../actions/proposals';
 import Card from './Cards'
 
 import '../../../css/components/MyQuotes.css';
@@ -26,7 +26,7 @@ class MyQuotes extends Component {
     const { dispatch } = this.props;
   
     // Bind functions to be called by child with dispatch to store
-    const proposalGetData = bindActionCreators(SystemActionCreators.proposalGetData, dispatch);
+    const proposalGetData = bindActionCreators(ProposalActionCreators.proposalGetData, dispatch);
   
     proposalGetData(config.PROPOSAL_URL);
   }
@@ -116,7 +116,7 @@ MyQuotes.PropTypes = {
 // transform state to props (state change are injected in props in below statements)
 const mapStateToProps = state => (
   { 
-    quotes: state.quotes,
+    quotes: state.proposals.quotes,
   }
 );
 

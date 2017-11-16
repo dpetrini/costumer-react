@@ -284,7 +284,7 @@ Proposal.propTypes = {
 // transform state to props (state change are injected in props in below statements)
 const mapStateToProps = state => (
   { 
-    proposalSent: state.proposalSent,
+    proposalSent: state.proposals.proposalSent,
   }
 );
 

@@ -7,6 +7,8 @@ import { connect } from 'react-redux';
 import { withRouter } from 'react-router-dom'
 
 import * as SystemActionCreators from '../actions/all';
+import * as ProposalActionCreators from '../actions/proposals';
+import * as CostumerActionCreators from '../actions/costumers';
 
 // ver referencia http://starhack.it/guide
 
@@ -62,7 +64,7 @@ class Body extends Component {
   render() {
 
     // Redux
-    const { dispatch, fullData } = this.props;
+    const { dispatch, fullData, costumers } = this.props;
     console.log(this.props)
 
     // Bind functions to be called by child with dispatch to store
@@ -74,9 +76,9 @@ class Body extends Component {
     const updateCityHsp = bindActionCreators(SystemActionCreators.updateCityHsp, dispatch);
 
     // Thunk MW for fetches - with this dont need mapDispatchToProps
-    const fetchData = bindActionCreators((url) =>SystemActionCreators.costumerFetchData(url), dispatch);
-    const postData = bindActionCreators((url, data) =>SystemActionCreators.costumerPostData(url, data), dispatch);
-    const sendProposal = bindActionCreators((url, data) =>SystemActionCreators.proposalPostData(url, data), dispatch);
+    const fetchData = bindActionCreators((url) =>CostumerActionCreators.costumerFetchData(url), dispatch);
+    const postData = bindActionCreators((url, data) =>CostumerActionCreators.costumerPostData(url, data), dispatch);
+    const sendProposal = bindActionCreators((url, data) =>ProposalActionCreators.proposalPostData(url, data), dispatch);
 
     return (
 
@@ -149,7 +151,7 @@ class Body extends Component {
 
                 <Tab.Pane eventKey="fifth">
                   <Costumers 
-                    costumerData={fullData.costumerData} 
+                    costumerData={costumers.costumerData} 
                     costumerHeader={costumerHeaderIni}
                     onDataChange={this._onCustumersDataChange}
                     postData={postData}
@@ -158,7 +160,7 @@ class Body extends Component {
 
                 <Tab.Pane eventKey="sixth">
                   <Proposal
-                    costumer={fullData.costumerData} 
+                    costumer={costumers.costumerData} 
                     resultData={fullData.resultData}
                     systemData={fullData.systemData}
                     onSendProposal={sendProposal}
@@ -185,7 +187,8 @@ class Body extends Component {
 // transform state to props (state change are injected in props in below statements)
 const mapStateToProps = state => (
   { 
-    fullData: state,
+    fullData: state.data,
+    costumers: state.costumers,
   }
 );
 

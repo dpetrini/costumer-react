@@ -10,3 +10,4 @@ doc/
 Fotovoltaica_sample.xls
 package-lock.json
 .DS_Store
+*.zip

@@ -6,7 +6,7 @@ import Excel from './Excel';
 import CostumerForm from './CostumerForm'
 
 import * as config from '../config'
-console.log("config", config)
+console.log('config', config)
 
 class Costumers extends Component {
   
