@@ -1,7 +1,7 @@
-
+// Reducer and main data state for App main logic
 import * as SystemActionTypes from '../actiontypes/system';
 
-// Complete state for app, handled by Redux
+// State that handles logic for app, handled by Redux
 const initialState = {
     
   // Holds the consumption table HSP, monthly consumption and cost
