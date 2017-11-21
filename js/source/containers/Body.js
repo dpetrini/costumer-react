@@ -6,7 +6,7 @@ import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import { withRouter } from 'react-router-dom'
 
-import * as SystemActionCreators from '../actions/all';
+import * as SystemActionCreators from '../actions/system';
 import * as ProposalActionCreators from '../actions/proposals';
 import * as CostumerActionCreators from '../actions/costumers';
 
@@ -187,7 +187,7 @@ class Body extends Component {
 // transform state to props (state change are injected in props in below statements)
 const mapStateToProps = state => (
   { 
-    fullData: state.data,
+    fullData: state.system,
     costumers: state.costumers,
   }
 );

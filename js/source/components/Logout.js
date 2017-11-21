@@ -4,7 +4,7 @@ import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import { withRouter } from 'react-router-dom';
 
-import * as SystemActionCreators from '../actions/all';
+import * as AuthActionCreators from '../actions/auth';
 import * as config from '../config';
 
 class Logout extends Component {
@@ -15,10 +15,10 @@ class Logout extends Component {
     
     const { dispatch } = this.props;
     
-    //  loginPostData: (url) => dispatch(SystemActionCreators.loginPostData(url));
+    //  loginPostData: (url) => dispatch(AuthActionCreators.loginPostData(url));
 
 
-    const logoutPostData = bindActionCreators((url) =>SystemActionCreators.logoutPostData(url), dispatch);
+    const logoutPostData = bindActionCreators((url) =>AuthActionCreators.logoutPostData(url), dispatch);
 
     
     if (this.props.authorized) {
@@ -53,7 +53,7 @@ const mapStateToProps = state => (
 // Thunk
 // const mapDispatchToProps = (dispatch) => {
 //   return {
-//     logoutPostData: (url) => dispatch(SystemActionCreators.loginPostData(url)),
+//     logoutPostData: (url) => dispatch(AuthActionCreators.loginPostData(url)),
 //   };
 // };
 

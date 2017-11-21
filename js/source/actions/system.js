@@ -1,4 +1,4 @@
-import * as SystemActionTypes from '../actiontypes/all';
+import * as SystemActionTypes from '../actiontypes/system';
 
 // Used to configure in app initial load and after proposal cycle
 export const initApp = data => {
