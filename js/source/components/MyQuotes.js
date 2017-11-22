@@ -15,9 +15,20 @@ var quotesHeader = [
   'Nome','Sobrenome', 'Potência Pico', 'Data', 'Valor (R$)', 'Status',
 ];
 
+// to prepare date from ISODate in database to UI
+function dateToYMD(isoDate) {
+
+  if (isoDate === undefined || isoDate === '' || isoDate === null)
+    return 'NA'
+
+  let date = new Date(isoDate);
+  var d = date.getDate();
+  var m = date.getMonth() + 1;
+  var y = date.getFullYear();
+  return '' + y + '-' + (m<=9 ? '0' + m : m) + '-' + (d <= 9 ? '0' + d : d);
+}
 
 class MyQuotes extends Component {
-
 
   // Fetch initial data
   componentDidMount () {
@@ -78,7 +89,7 @@ class MyQuotes extends Component {
                                   <td key={key+1}>{element.firstName} </td>
                                   <td key={key+2}>{element.lastName}</td>
                                   <td key={key+3}>{element.sysProposal}</td>
-                                  <td key={key+4}>{element.date}</td>
+                                  <td key={key+4}>{dateToYMD(element.date)}</td>
                                   <td key={key+5}>{element.totalCost}</td>
                                   <td key={key+6}>{element.status}</td>
                                 </tr>
