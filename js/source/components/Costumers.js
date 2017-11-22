@@ -1,9 +1,13 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import { Button, Modal } from 'react-bootstrap';  
+import { Button, Modal, Table } from 'react-bootstrap';  
 
 import Excel from './Excel';
+import Card from './Cards'
+
 import CostumerForm from './CostumerForm'
+
+import '../../../css/components/Costumer.css'; 
 
 import * as config from '../config'
 console.log('config', config)
@@ -14,14 +18,15 @@ class Costumers extends Component {
   // http://egorsmirnov.me/2015/06/14/react-and-es6-part2.html
   state = {
     newCostumer: false,
-    costumerIndex: null,
-    localCostumer: [],
+    selectedId: -1,
   };
 
-  // For costumer list, notify the index
-  _onExcelRowChange(row) {
-    this.setState({
-      costumerIndex: row,
+  // For costumer selection notify the main redux state and this state 
+  onRowClick(e) {
+    let row = e.target.dataset.row
+    this.props.selectCostumerId(row);
+    this.setState ({ 
+      selectedId: row,
     });
   }
   
@@ -83,20 +88,55 @@ class Costumers extends Component {
     this.props.fetchData(config.COSTUMERS_URL);
   }
 
-  componentWillReceiveProps(nextProps) {
-
-  }
-
-
   render() {
-
     return (
       <div className={'main-screen-body'} >
-        <Excel 
-          initialData={this.props.costumerData} 
-          headers={this.props.costumerHeader} 
-          onDataChange={this._onExcelRowChange.bind(this)}
-          selectRow={true}/>
+
+        <Card
+          title="Lista de clientes"
+          category="Selecione um cliente para enviar proposta ou use o botão abaixo para criar um novo"
+          contentClass="table-responsive table-full-width"
+          content={
+            <Table striped hover>
+              <thead>
+                <tr>
+                  {
+                    this.props.costumerHeader.map((prop, key) => {
+                      return (
+                        <th key={key}>{prop}</th>
+                      );
+                    })
+                  }
+                </tr>
+              </thead>
+              <tbody>
+                {
+                  this.props.costumerData.map((element, key) => {
+                    if ( this.state.selectedId === element._id)
+                      return (
+                        <tr key={key} className={'selectedCostumer'} onClick={this.onRowClick.bind(this)}>                    
+                          <td data-row = {element._id} >{element.firstName} </td>
+                          <td data-row = {element._id} >{element.lastName}</td>
+                          <td data-row = {element._id} >{element.contactNumber}</td>
+                          <td data-row = {element._id} >{element.email}</td>
+                        </tr>
+                      )
+                    else 
+                      return (
+                        <tr key={key} onClick={this.onRowClick.bind(this)}>                    
+                          <td data-row = {element._id} >{element.firstName} </td>
+                          <td data-row = {element._id} >{element.lastName}</td>
+                          <td data-row = {element._id} >{element.contactNumber}</td>
+                          <td data-row = {element._id} >{element.email}</td>
+                        </tr>
+                      )
+                  })
+                }
+              </tbody>
+            </Table>
+          }
+        />
+
         <p>
           <Button onClick={this.callNewCostumerPopup.bind(this)} >Novo Cliente »</Button>
         </p>
@@ -109,11 +149,12 @@ class Costumers extends Component {
 }
   
 Costumers.propTypes = {
-  costumerData: PropTypes.arrayOf(React.PropTypes.arrayOf(React.PropTypes.string)).isRequired,
+  costumerData: PropTypes.arrayOf(React.PropTypes.object).isRequired,
   costumerHeader: PropTypes.arrayOf(React.PropTypes.string).isRequired,
   onDataChange: PropTypes.func.isRequired,
   postData:PropTypes.func.isRequired,
-  fetchData:PropTypes.func.isRequired,  
+  fetchData:PropTypes.func.isRequired,
+  selectCostumerId: PropTypes.func.isRequired,
 }
 
 export default Costumers;

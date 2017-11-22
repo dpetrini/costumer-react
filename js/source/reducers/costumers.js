@@ -4,10 +4,10 @@ import * as CostumersActionTypes from '../actiontypes/costumers';
 
 const initialState = {
   costumerData: [
-    ['João', 'Pereira', '11 22987 2222', 'joaopereira@gmail.com', ''],
-    ['Silvia', 'Joao', '11 3322 22332', 'silviajoao@gmail.com', ''],
+    { firstName: 'João', lastName: 'Pereira', contactNumber: '11 22987 2222', emailAddress: 'joaopereira@gmail.com' },
+    { firstName: 'Silvia', lastName: 'Joao', contactNumber: '11 3322 22332', emailAddress: 'silviajoao@gmail.com' },
   ],
-  selectedCostumer: -1, // Selected costumer from list
+  selectedCostumerId: -1, // Selected costumer from list
 };
 
 export const costumers = (state = initialState, action) => {
@@ -20,25 +20,9 @@ export const costumers = (state = initialState, action) => {
         
       console.log('SUCCESS FETCH', action.items);
         
-      const costumerData = [];
-        
-      action.items.forEach(function(element) {
-        const tempData = [
-          element.firstName, 
-          element.lastName, 
-          element.contactNumber, 
-          element.email,
-          // element._id,
-          '',
-        ];
-        costumerData.push(tempData);
-      }, this); 
-              
-      console.log(costumerData)
-        
       return {
         ...state,
-        costumerData: costumerData,
+        costumerData: action.items,
       };
     }
         
@@ -51,6 +35,18 @@ export const costumers = (state = initialState, action) => {
         ...state,
       };
     }
+
+    // Sucessfull new costumer posted to database
+    case CostumersActionTypes.SELECT_COSTUMER: {
+      
+      console.log('Select Costumer', action.id);
+      
+      return {
+        ...state,
+        selectedCostumerId: action.id,
+      };
+    }
+
     // Default state: no changes
     default:
       return state;

@@ -1,4 +1,6 @@
-export const ADD_COSTUMER = 'costumers/ADD_COSTUMER';
+// export const ADD_COSTUMER = 'costumers/ADD_COSTUMER';
+
+export const SELECT_COSTUMER = 'costumers/SELECT_COSTUMER';
 
 // Fetch items
 export const ITEMS_POST_DATA_SUCCESS = 'costumers/ITEMS_POST_DATA_SUCCESS'

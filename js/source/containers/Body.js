@@ -29,7 +29,7 @@ var headersIni = [
 ];
 
 var costumerHeaderIni = [
-  'Nome','Sobrenome', 'Telefone', 'Email', '✔',
+  'Nome','Sobrenome', 'Telefone', 'Email',
 ];
 
 class Body extends Component {
@@ -65,7 +65,6 @@ class Body extends Component {
 
     // Redux
     const { dispatch, fullData, costumers } = this.props;
-    console.log(this.props)
 
     // Bind functions to be called by child with dispatch to store
     const initApp = bindActionCreators(SystemActionCreators.initApp, dispatch);
@@ -74,6 +73,8 @@ class Body extends Component {
     const updateBarGraph = bindActionCreators(SystemActionCreators.updateBarGraph, dispatch);
     const updateSelectedResult = bindActionCreators(SystemActionCreators.updateSelectedResult, dispatch);
     const updateCityHsp = bindActionCreators(SystemActionCreators.updateCityHsp, dispatch);
+
+    const selectCostumerId = bindActionCreators(CostumerActionCreators.selectCostumerId, dispatch)
 
     // Thunk MW for fetches - with this dont need mapDispatchToProps
     const fetchData = bindActionCreators((url) =>CostumerActionCreators.costumerFetchData(url), dispatch);
@@ -155,7 +156,8 @@ class Body extends Component {
                     costumerHeader={costumerHeaderIni}
                     onDataChange={this._onCustumersDataChange}
                     postData={postData}
-                    fetchData={fetchData}/>
+                    fetchData={fetchData}
+                    selectCostumerId={selectCostumerId}/>
                 </Tab.Pane>
 
                 <Tab.Pane eventKey="sixth">
@@ -165,7 +167,8 @@ class Body extends Component {
                     systemData={fullData.systemData}
                     onSendProposal={sendProposal}
                     dataGraph={fullData.dataGraph}
-                    initApp={initApp}/>
+                    initApp={initApp}
+                    selectedCostumerId={costumers.selectedCostumerId}/>
                 </Tab.Pane>
               
               </Tab.Content>

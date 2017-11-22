@@ -5,8 +5,6 @@ import { connect } from 'react-redux';
 import { Button, Modal } from 'react-bootstrap';
 import html2canvas from '../extlib/html2canvas.min';
 import jsPDF from '../extlib/jspdf.min';
-// import html2pdf from '../extlib/html2pdf';
-
 
 import SolarBarChart from './Barchart'
 
@@ -169,30 +167,20 @@ class Proposal extends Component {
       });
   }
 
-  printHtml2Pdf() {
-    var element = document.getElementById("divToPrint");
-    html2pdf(element, {
-      margin:       1,
-      filename:     'myfile.pdf',
-      image:        { type: 'jpeg', quality: 0.98 },
-      html2canvas:  { dpi: 192, letterRendering: true },
-      jsPDF:        { unit: 'in', format: 'letter', orientation: 'portrait' }
-    });
-  }
-
   
   render () {
 
-    // Load the selected costumer
-    for (let i = 0; i < this.props.costumer.length; i++) {
-      if (this.props.costumer[i][4] === '✔') {
-        this.costumerName = this.props.costumer[i][0];
-        this.costumerLastName = this.props.costumer[i][1];
-        console.log(this.costumerName)
-      }
-    }
+    // default empty names
+    this.costumerName = '(select costumer)';
+    this.costumerLastName = '(select costumer)';
 
-    console.log(this.props.costumer)
+    // if costumer _id matches then retrieve the names 
+    this.props.costumer.map((element, key) => {
+      if (element._id === this.props.selectedCostumerId) {
+        this.costumerName = element.firstName;
+        this.costumerLastName = element.lastName;
+      }
+    })
 
     return (
       <div className={'main-screen-body'} >
@@ -277,6 +265,7 @@ Proposal.propTypes = {
   systemData: PropTypes.object.isRequired,
   onSendProposal: PropTypes.func.isRequired,
   initApp: PropTypes.func.isRequired,
+  selectedCostumerId: PropTypes.string,
 }
 
 // export default withRouter(Proposal);

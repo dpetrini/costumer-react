@@ -1,10 +1,10 @@
 import * as SystemActionTypes from '../actiontypes/costumers';
 
 // Add new costumer Action
-export const addCostumer = costumerData => {
+export const selectCostumerId = id => {
   return {
-    type: SystemActionTypes.ADD_COSTUMER,
-    costumerData,
+    type: SystemActionTypes.SELECT_COSTUMER,
+    id,
   };
 };
   

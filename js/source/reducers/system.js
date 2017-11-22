@@ -87,7 +87,7 @@ const initialState = {
 };
 
 // Reducer function
-export const system = (state=initialState, action) => {	
+export const system = (state = initialState, action) => {	
 	
   switch (action.type) {
 

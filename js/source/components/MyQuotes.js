@@ -51,49 +51,45 @@ class MyQuotes extends Component {
             <Col sm={8}>
               <Tab.Content animation={true}>
                 <Tab.Pane eventKey="first">
- 
-                  <div className="container-fluid">
-                    <div className="row">
-                      <div className="col-md-12">
-                        <Card
-                          title="Lista de cotações enviadas"
-                          category="(colocar dropdown em status)"
-                          contentClass="table-responsive table-full-width"
-                          content={
-                            <Table striped hover>
-                              <thead>
-                                <tr>
-                                  {
-                                    quotesHeader.map((prop, key) => {
-                                      return (
-                                        <th key={key}>{prop}</th>
-                                      );
-                                    })
-                                  }
+
+
+                  <Card
+                    title="Lista de cotações enviadas"
+                    category="(colocar dropdown em status)"
+                    contentClass="table-responsive table-full-width"
+                    content={
+                      <Table striped hover>
+                        <thead>
+                          <tr>
+                            {
+                              quotesHeader.map((prop, key) => {
+                                return (
+                                  <th key={key}>{prop}</th>
+                                );
+                              })
+                            }
+                          </tr>
+                        </thead>
+                        <tbody>
+                          {
+                            this.props.quotes.map((element, key) => {
+                              return (
+                                <tr key={key}>
+                                  <td key={key+1}>{element.firstName} </td>
+                                  <td key={key+2}>{element.lastName}</td>
+                                  <td key={key+3}>{element.sysProposal}</td>
+                                  <td key={key+4}>{element.date}</td>
+                                  <td key={key+5}>{element.totalCost}</td>
+                                  <td key={key+6}>{element.status}</td>
                                 </tr>
-                              </thead>
-                              <tbody>
-                                {
-                                  this.props.quotes.map((element, key) => {
-                                    return (
-                                      <tr key={key}>
-                                        <td key={key+1}>{element.firstName} </td>
-                                        <td key={key+2}>{element.lastName}</td>
-                                        <td key={key+3}>{element.sysProposal}</td>
-                                        <td key={key+4}>{element.date}</td>
-                                        <td key={key+5}>{element.totalCost}</td>
-                                        <td key={key+6}>{element.status}</td>
-                                      </tr>
-                                    )
-                                  })
-                                }
-                              </tbody>
-                            </Table>
+                              )
+                            })
                           }
-                        />
-                      </div>
-                    </div>
-                  </div>
+                        </tbody>
+                      </Table>
+                    }
+                  />
+
 
 
                 </Tab.Pane>
