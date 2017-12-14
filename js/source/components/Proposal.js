@@ -1,9 +1,7 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import ReactDOM from 'react-dom'
 
-import { Email, Item, Span, A, renderEmail, Image } from 'react-html-email'
-
+import { Email, Item, renderEmail, Image } from 'react-html-email-browser'
 
 import { withRouter } from 'react-router-dom'
 import { connect } from 'react-redux';
@@ -81,12 +79,6 @@ class Proposal extends Component {
             <Item align="center">
               {this.costumerTextSecondPart()}
             </Item>
-            <Item align="center">
-              <Span fontSize={20}>               
-                This is an example email made with:
-                <A href="https://github.com/chromakode/react-html-email">react-html-email</A>.
-              </Span>
-            </Item>
           </Email>
         )
 
@@ -103,7 +95,6 @@ class Proposal extends Component {
           payback: this.props.resultData[0].payback,
           gerCost: this.props.systemData.gerCost,
           avgCost: this.props.systemData.avgCost,
-          //contentHTML: JSON.stringify(JSON.decycle(this.myDiv)),
           contentHTML: contentHTML,
           status: 'sent',
           date: timeNow.toISOString(),
@@ -117,10 +108,7 @@ class Proposal extends Component {
           console.log(proposalData)
   
           this.props.onSendProposal(config.PROPOSAL_EMAIL_URL, proposalData);
-  
         }
-
-  
       });
   }
 
@@ -288,10 +276,8 @@ class Proposal extends Component {
         <a href="http://integrahausenergiasolar.com.br/vantagens-e-desvantagens-da-energia-solar/">Vantagens e Desvantagens da Energia Solar</a>.
         <br />
         <br />
-
       Obrigado pelo contato.
-      Estamos a disposição para fazer uma visita e lhe explicar o funcionamento da energia solar pessoalmente.<br />
-        <br />
+      Estamos a disposição para fazer uma visita e lhe explicar sobre energia solar pessoalmente.
         <br />
       Atenciosamente,
         <br />
